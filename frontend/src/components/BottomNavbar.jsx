@@ -19,12 +19,11 @@ const BottomNavbar = () => {
   };
 
   return (
-
     <div className="px-4 absolute bottom-5 left-0 right-0 min-h-20 flex items-center justify-center">
       <div className="flex items-center justify-center h-fit w-fit rounded-full p-1">
-        <div className="flex flex-col items-center justify-center rounded-full overflow-hidden w-[100px] h-20 border-r-0 p-1 -m-4">
+        <div className="flex flex-col items-center justify-center rounded-full overflow-hidden w-[100px] h-20 border-r-0 p-1 -m-4 shadow-sm">
           <button
-            className={`flex items-center justify-center w-full h-full rounded-full ${
+            className={`flex items-center justify-center w-full h-full rounded-[32px] ${
               activeButton === "home" ? "bg-primary z-40" : "bg-white z-30"
             }`}
             type="button"
@@ -36,30 +35,10 @@ const BottomNavbar = () => {
               className="w-6 h-6"
             />
           </button>
-
-        </div>
-        <div className="flex flex-col items-center justify-center rounded-full overflow-hidden w-[100px] h-20  p-1 -m-3">
-          <button
-            className={`flex items-center justify-center px-8 py-6 w-full  rounded-full  ${
-              activeButton === "parking" ? "bg-primary z-40" : "bg-white z-30"
-            }`}
-            type="button"
-            onClick={() => handleActive("parking")}
-          >
-            <img
-              src={
-                activeButton === "parking"
-                  ? ParkingIconSolid
-                  : ParkingIconOutline
-              }
-              alt="activity"
-              className="w-10 h-10"
-            />
-          </button>
         </div>
         <div className="flex flex-col items-center justify-center rounded-full overflow-hidden w-[100px] h-20 p-1 -m-3">
           <button
-            className={`flex items-center justify-center px-8 py-6 w-full  rounded-full  ${
+            className={`flex items-center justify-center px-8 py-6 w-full  rounded-[32px]  ${
               activeButton === "reservation"
                 ? "bg-primary z-40"
                 : "bg-white z-30"
@@ -74,13 +53,32 @@ const BottomNavbar = () => {
                   : ReserveIconOutline
               }
               alt="reservation"
-              className="w-6 h-6    "
+              className="w-6 h-6"
+            />
+          </button>
+        </div>
+        <div className="flex flex-col items-center justify-center rounded-full overflow-hidden w-[100px] h-20  p-1 -m-3">
+          <button
+            className={`flex items-center justify-center px-8 py-6 w-full  rounded-[32px] ${
+              activeButton === "parking" ? "bg-primary z-40" : "bg-white z-30"
+            }`}
+            type="button"
+            onClick={() => handleActive("parking")}
+          >
+            <img
+              src={
+                activeButton === "parking"
+                  ? ParkingIconSolid
+                  : ParkingIconOutline
+              }
+              alt="activity"
+              className="w-6 h-6"
             />
           </button>
         </div>
         <div className="flex flex-col items-center justify-center rounded-full overflow-hidden w-[100px] h-20 p-1 -m-3">
           <button
-            className={`flex items-center justify-center px-8 py-6 w-full  rounded-full  ${
+            className={`flex items-center justify-center px-8 py-6 w-full  rounded-[32px]  ${
               activeButton === "setting" ? "bg-primary z-40" : "bg-white z-30"
             }`}
             type="button"
