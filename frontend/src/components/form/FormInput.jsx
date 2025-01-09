@@ -1,6 +1,4 @@
-import { useState } from "react";
 import "../../index.css";
-import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 const FormInput = ({
   placeholder,
@@ -24,11 +22,10 @@ const FormInput = ({
         value={value}
         autoComplete="off"
         {...rest}
-        maxLength={name === "Enter OTP" ? 6 : null}
       />
       <label
         htmlFor={name}
-        className="form__label peer-focus:text-primary transition"
+        className="form__label peer-focus:text-primary transition peer-focus:font-semibold"
       >
         {label || name}
       </label>

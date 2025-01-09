@@ -16,10 +16,10 @@ const BottomNavbar = () => {
 
   const handleActive = (buttonName) => {
     setActiveButton(buttonName);
-    console.log(buttonName);
   };
 
   return (
+
     <div className="px-4 absolute bottom-5 left-0 right-0 min-h-20 flex items-center justify-center">
       <div className="flex items-center justify-center h-fit w-fit rounded-full p-1">
         <div className="flex flex-col items-center justify-center rounded-full overflow-hidden w-[100px] h-20 border-r-0 p-1 -m-4">
@@ -36,6 +36,7 @@ const BottomNavbar = () => {
               className="w-6 h-6"
             />
           </button>
+
         </div>
         <div className="flex flex-col items-center justify-center rounded-full overflow-hidden w-[100px] h-20  p-1 -m-3">
           <button
