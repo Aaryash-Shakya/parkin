@@ -1,5 +1,4 @@
 import { useState } from "react";
-import BottomNavbar from "../components/BottomNavbar";
 import Map from "../components/Map";
 import Searchbar from "../components/Searchbar";
 
@@ -13,10 +12,7 @@ const Home = () => {
         setSelectPosition={setSelectPosition}
       />
       {/* Map */}
-      <Map
-        selectPosition={selectPosition}
-      />
-      <BottomNavbar />
+      <Map selectPosition={selectPosition} />
     </div>
   );
 };

@@ -14,6 +14,10 @@ body {
   grid-template-columns: 1.5fr 1fr;
 }
 
+.react-datetime-picker__wrapper {
+  border: none !important;
+}
+
 @media only screen and (max-width: 912px) {
   .login {
     display: grid;
