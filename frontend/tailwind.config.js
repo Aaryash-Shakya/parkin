@@ -29,7 +29,7 @@ export default {
         },
         black: {
           DEFAULT: "rgb(21, 21, 20)",
-          500: "#262626",
+          500: "rgb(85, 85, 85)",
         },
         white: {
           DEFAULT: "rgb(249, 249, 248)",
