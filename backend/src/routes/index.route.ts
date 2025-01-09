@@ -16,4 +16,3 @@ router.get("/health-check", (req: any, res: any) => {
 });
 
 export default router;
-
