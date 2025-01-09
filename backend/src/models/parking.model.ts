@@ -26,8 +26,12 @@ const parkingSchema = new Schema(
 		},
 		// capacity in terms of number of 2 wheelers. we can later convert it into 4 wheeler count depending using some ratio
 		capacity: {
-			type: String,
+			type: Number,
 			required: true,
+		},
+		reservedSlots: {
+			type: Number,
+			required: false,
 		},
 		hourlyRates: [
 			{
