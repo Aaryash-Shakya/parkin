@@ -1,0 +1,43 @@
+{
+	"name": "parkin-backend",
+	"version": "1.0.0",
+	"description": "Backend for ParkIn",
+	"main": "app.js",
+	"scripts": {
+		"dev": "nodemon ./app.ts",
+		"start": "node ./dist/app.js",
+		"build": "npm run clean && yarn && npm run build-ts ",
+		"clean": "rimraf ./dist",
+		"build-ts": "tsc"
+	},
+	"dependencies": {
+		"body-parser": "^1.20.3",
+		"compression": "^1.7.5",
+		"cookie-parser": "^1.4.7",
+		"cors": "^2.8.5",
+		"dotenv": "^16.4.7",
+		"dotnet": "^1.1.4",
+		"express": "^4.21.2",
+		"express-rate-limit": "^7.5.0",
+		"helmet": "^8.0.0",
+		"joi": "^17.13.3",
+		"method-override": "^3.0.0",
+		"uuid": "^11.0.4"
+	},
+	"keywords": [],
+	"author": "ByteForce",
+	"license": "ISC",
+	"devDependencies": {
+		"@types/compression": "^1.7.5",
+		"@types/cookie-parser": "^1.4.8",
+		"@types/cors": "^2.8.17",
+		"@types/express": "^5.0.0",
+		"@types/http-errors": "^2.0.4",
+		"@types/method-override": "^3.0.0",
+		"@types/node": "^22.10.5",
+		"@types/uuid": "^10.0.0",
+		"nodemon": "^3.1.9",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.7.3"
+	}
+}
