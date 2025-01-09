@@ -1,7 +1,11 @@
+import MyRoutes from "./MyRoutes";
+import { ToastContainer } from "react-toastify";
+
 function App() {
   return (
     <>
-      <h1>hello wr</h1>
+      <ToastContainer />
+      <MyRoutes />
     </>
   );
 }
