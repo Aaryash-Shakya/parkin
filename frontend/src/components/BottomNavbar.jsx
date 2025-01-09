@@ -9,6 +9,22 @@ const BottomNavbar = () => {
           <IoHomeOutline size={25} />
           <p>Home</p>
         </div>
+        <div className="flex flex-col items-center justify-center gap-1">
+          <IoHomeOutline size={25} />
+          <p>Home</p>
+        </div>
+        <div className="flex flex-col items-center justify-center gap-1">
+          <IoHomeOutline size={25} />
+          <p>Home</p>
+        </div>
+        <div className="flex flex-col items-center justify-center gap-1">
+          <IoHomeOutline size={25} />
+          <p>Home</p>
+        </div>
+        <div className="flex flex-col items-center justify-center gap-1">
+          <IoHomeOutline size={25} />
+          <p>Home</p>
+        </div>
       </div>
     </div>
   );
