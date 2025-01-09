@@ -11,10 +11,10 @@ const FormInput = ({
 }) => {
   return (
     <div
-      className={`relative mb-5 ${style}  min-w-[350px] xl:min-w-[400px] flex flex-col-reverse`}
+      className={`relative mb-5 ${style} min-w-[350px] xl:min-w-[400px] flex flex-col-reverse`}
     >
       <input
-        className="relative w-full py-3 mt-2  border-b-2 border-primary outline-none placeholder:text-sm placeholder:tracking-wider transition tracking-wider text-sm peer"
+        className="relative w-full rounded-[36px] mt-2 bg-white px-4 font-medium py-5 outline-none placeholder:text-md placeholder:tracking-wider transition tracking-wider text-md peer"
         placeholder={placeholder}
         type={type}
         name={name}
@@ -25,7 +25,7 @@ const FormInput = ({
       />
       <label
         htmlFor={name}
-        className="form__label peer-focus:text-primary transition peer-focus:font-semibold"
+        className="form__label peer-focus:text-primary transition font-semibold ml-2"
       >
         {label || name}
       </label>
