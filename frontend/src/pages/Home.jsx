@@ -1,9 +1,13 @@
-import { toast } from "react-toastify";
+import BottomNavbar from "../components/BottomNavbar";
+import Searchbar from "../components/Searchbar";
 
 const Home = () => {
-  toast.info("testing toastify");
-
-  return <div>Home</div>;
+  return (
+    <div className="bg-background h-screen relative">
+      <Searchbar />
+      <BottomNavbar />
+    </div>
+  );
 };
 
 export default Home;
