@@ -14,10 +14,7 @@ const Home = () => {
       />
       {/* Map */}
       <Map
-        selectPosition={{
-          lat: selectPosition?.lat || 51.505,
-          lon: selectPosition?.lon || -0.09,
-        }}
+        selectPosition={selectPosition}
       />
       <BottomNavbar />
     </div>
