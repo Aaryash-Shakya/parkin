@@ -3,6 +3,7 @@ import logger from "../logger";
 import userModel from "../models/user.model";
 import parkingModel from "../models/parking.model";
 import parkingRoutes from "./parking.route";
+import userRoutes from "./user.route";
 
 const router = express.Router();
 
@@ -60,5 +61,6 @@ router.get("/test", async (req: any, res: any) => {
 });
 
 router.use("/parking", parkingRoutes);
+router.use("/user", userRoutes);
 
 export default router;
