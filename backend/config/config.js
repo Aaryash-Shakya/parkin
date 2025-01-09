@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 
 const config = {
 	env: process.env.NODE_ENV,
@@ -7,6 +7,8 @@ const config = {
 	authTokenExpiry: process.env.AUTH_TOKEN_EXPIRY_TIME_IN_DAYS,
 	logFileLocation: process.env.LOG_FILE_LOCATION,
 	frontEndUrl: process.env.FRONTEND_URL,
+	mongoUri: process.env.MONGO_URI,
 };
 
-module.exports = config;
+export default config;
+

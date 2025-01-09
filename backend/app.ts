@@ -8,11 +8,13 @@ import rateLimit from "express-rate-limit";
 import helmet from "helmet";
 import createHttpError from "http-errors";
 
-import { config } from "dotenv";
+import dotenv from "dotenv";
 import routes from "./src/routes/index.route";
 import * as uuid from "uuid";
+import mongoose from "mongoose";
+import config from "./config/config";
 
-config();
+dotenv.config();
 
 const app: Application = express();
 
@@ -64,5 +66,13 @@ app.use(errorHandler);
 
 const port = Number(process.env.PORT || 3000);
 
-app.listen(port, () => console.log(`Server is running on port ${port}`));
+// connect to db
+if (!config.mongoUri) {
+	console.error("Mongo URI not found");
+	process.exit(1);
+}
+mongoose
+	.connect(config.mongoUri)
+	.then(() => app.listen(port, () => console.log(`Server is running on port ${port}`)))
+	.catch(err => console.log(err));
 
