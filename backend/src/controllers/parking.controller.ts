@@ -1,5 +1,6 @@
-import parkingModel from "../models/parking.model";
+import parkingModel, { TParking } from "../models/parking.model";
 import logger from "../logger";
+import parkingSessionModel from "../models/parking-session.model";
 
 async function addParking(req: any, res: any, next: any) {
 	const {
@@ -8,6 +9,7 @@ async function addParking(req: any, res: any, next: any) {
 		lat,
 		long,
 		capacity,
+		maxHeightInMeter,
 		features,
 		hourlyRates,
 		monthlyRates,
@@ -17,7 +19,7 @@ async function addParking(req: any, res: any, next: any) {
 		message: `Inside parking controller to add parking ${name}`,
 		reqId: req.id,
 		ip: req.headers["x-forwarded-for"] || req.socket.remoteAddress,
-		api: "/add",
+		api: "/parking/add",
 		method: "POST",
 	});
 	try {
@@ -31,6 +33,8 @@ async function addParking(req: any, res: any, next: any) {
 				coordinates: [parseFloat(long), parseFloat(lat)],
 			};
 		if (capacity) parkingObj.capacity = parseInt(capacity);
+		if (maxHeightInMeter)
+			parkingObj.maxHeightInMeter = parseFloat(maxHeightInMeter);
 		if (features) parkingObj.features = features;
 		if (hourlyRates) parkingObj.hourlyRates = hourlyRates;
 		if (monthlyRates) parkingObj.monthlyRates = monthlyRates;
@@ -50,6 +54,7 @@ async function updateParking(req: any, res: any, next: any) {
 		lat,
 		long,
 		capacity,
+		maxHeightInMeter,
 		features,
 		hourlyRates,
 		monthlyRates,
@@ -58,7 +63,7 @@ async function updateParking(req: any, res: any, next: any) {
 		message: `Inside parking controller to update parking ${name}`,
 		reqId: req.id,
 		ip: req.headers["x-forwarded-for"] || req.socket.remoteAddress,
-		api: "/update/:parkingId",
+		api: "/parking/update/:parkingId",
 		method: "PUT",
 	});
 	try {
@@ -74,6 +79,8 @@ async function updateParking(req: any, res: any, next: any) {
 				coordinates: [parseFloat(long), parseFloat(lat)],
 			};
 		if (capacity) parkingObj.capacity = parseInt(capacity);
+		if (maxHeightInMeter)
+			parkingObj.maxHeightInMeter = parseFloat(maxHeightInMeter);
 		if (features) parkingObj.features = features;
 		if (hourlyRates) parkingObj.hourlyRates = hourlyRates;
 		if (monthlyRates) parkingObj.monthlyRates = monthlyRates;
@@ -91,7 +98,7 @@ async function findNearbyParking(req: any, res: any, next: any) {
 		message: `Inside parking controller to find nearby parkings ${lat} ${long}`,
 		reqId: req.id,
 		ip: req.headers["x-forwarded-for"] || req.socket.remoteAddress,
-		api: "/nearby",
+		api: "/parking/nearby",
 		method: "GET",
 	});
 	try {
@@ -99,6 +106,12 @@ async function findNearbyParking(req: any, res: any, next: any) {
 			return res.status(400).json({ error: "Missing query" });
 		}
 		const EARTH_RADIUS_KILOMETER = 6378.1;
+
+		type TParkingWithAvailableSlots = TParking & {
+			_id: string;
+			availableSlots: number;
+		};
+
 		const parkingObj = await parkingModel.find({
 			location: {
 				// $near: {
@@ -117,7 +130,34 @@ async function findNearbyParking(req: any, res: any, next: any) {
 				},
 			},
 		});
-		res.json(parkingObj);
+
+		// count available slots
+		const processedParkings = await Promise.all(
+			parkingObj.map(async (parking) => {
+				const parkedVehicles = await parkingSessionModel.find({
+					parkingId: parking._id,
+					exitTime: null,
+				});
+				let usedSlots = 0;
+				if (parking.reservedSlots) {
+					usedSlots += parking.reservedSlots;
+				}
+				parkedVehicles.forEach((parkedVehicle) => {
+					if (parkedVehicle.vehicleType === "TWO_WHEELER") {
+						usedSlots += 1;
+					} else if (parkedVehicle.vehicleType === "FOUR_WHEELER") {
+						usedSlots += 2;
+					}
+				});
+				return {
+					...parking.toObject(),
+					availableSlots: parking.capacity - usedSlots,
+				};
+			}),
+		);
+
+		console.log(processedParkings);
+		res.json(processedParkings);
 	} catch (err) {
 		logger.log.error({ reqId: req.id, message: err });
 		return next(err);
