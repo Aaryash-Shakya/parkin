@@ -40,26 +40,26 @@ const Searchbar = (props) => {
 
   return (
     <div className="absolute top-2 left-0 w-full py-2 px-4 z-50">
-      <div className="flex flex-col gap-2">
-        <div className="flex items-center justify-center relative md:w-1/2 mx-auto">
+      <div className="flex flex-col gap-2 w-full">
+        <div className="flex items-center justify-center relative w-full mx-auto">
           <input
             type="text"
-            className="px-4 py-4 pl-5 w-10/12 rounded-full border-2 border-white text-md shadow-[0_4px_20px_4px_rgba(0,0,0,0.2)] focus:border-2 focus:border-black-500 outline-none"
+            className="px-4 py-4 pl-5 rounded-full border-2 w-full border-white text-md shadow-[0_4px_20px_4px_rgba(0,0,0,0.2)] focus:border-2 focus:border-black-500 outline-none"
             placeholder="search"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
-          <div
-            className="search-icon absolute right-8"
-            onClick={handleClick}
-          >
+          <div className="search-icon absolute right-8" onClick={handleClick}>
             <IoSearch size={25} className="text-black-500" />
           </div>
         </div>
-        <div className="rounded-lg bg-white">
+        <div className="rounded-lg bg-white md:w-2/3 mx-auto text-start">
           {listPlace.map((place) => {
             return (
-              <div key={place?.place_id} className="bg-white p-2">
+              <div
+                key={place?.place_id}
+                className="bg-white rounded-lg text-start group"
+              >
                 <button
                   onClick={() => {
                     setSelectPosition({
@@ -69,8 +69,9 @@ const Searchbar = (props) => {
                     setSearchText(place?.display_name);
                     setListPlace([]);
                   }}
+                  className="w-full group-hover:bg-gray-200 p-2"
                 >
-                  <p>{place?.display_name}</p>
+                  <p className="text-start">{place?.display_name}</p>
                 </button>
               </div>
             );
