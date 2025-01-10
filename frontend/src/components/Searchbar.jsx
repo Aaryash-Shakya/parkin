@@ -1,42 +1,52 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { IoSearch } from "react-icons/io5";
 
 const NOMINATIM_BASE_URL = "https://nominatim.openstreetmap.org/search?";
 
 const Searchbar = (props) => {
-  // eslint-disable-next-line no-unused-vars
-  const { selectPosition, setSelectPosition } = props;
+  const { setSelectPosition } = props;
   const [searchText, setSearchText] = useState("");
   const [listPlace, setListPlace] = useState([]);
-  let params = {
-    q: "",
-    format: "json",
-    addressdetails: "addressdetails",
-  };
+  // const [hasTyped, setHasTyped] = useState(false); // Track if the user has typed
 
-  const handleClick = () => {
-    // Search
-    if (searchText !== "") {
-      params = {
-        q: searchText,
-        format: "json",
-        addressdetails: 1,
-        polygon_geojson: 0,
-      };
-    }
+  const fetchPlaces = (query) => {
+    const params = {
+      q: query,
+      format: "json",
+      addressdetails: 1,
+      polygon_geojson: 0,
+    };
     const queryString = new URLSearchParams(params).toString();
     const requestOptions = {
       method: "GET",
       redirect: "follow",
     };
+
     fetch(`${NOMINATIM_BASE_URL}${queryString}`, requestOptions)
-      .then((response) => response.text())
+      .then((response) => response.json())
       .then((result) => {
-        console.log(JSON.parse(result));
-        setListPlace(JSON.parse(result));
+        console.log(result);
+        setListPlace(result);
       })
-      .catch((err) => console.log("err: ", err));
+      .catch((err) => console.log("Error fetching places:", err));
   };
+
+  useEffect(() => {
+    if (!searchText) {
+      setListPlace([]);
+      return;
+    }
+
+    // setHasTyped(true); // Mark that user has started typing
+
+    const debounceTimer = setTimeout(() => {
+      fetchPlaces(searchText);
+    }, 500); // Delay of 500ms
+
+    return () => {
+      clearTimeout(debounceTimer);
+    }; // Cleanup
+  }, [searchText]);
 
   return (
     <div className="absolute top-2 left-0 w-full py-2 px-4 z-50">
@@ -49,33 +59,38 @@ const Searchbar = (props) => {
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
-          <div className="search-icon absolute right-8" onClick={handleClick}>
+          <div className="search-icon absolute right-8">
             <IoSearch size={25} className="text-black-500" />
           </div>
         </div>
-        <div className="rounded-lg bg-white md:w-2/3 mx-auto text-start">
-          {listPlace.map((place) => {
-            return (
-              <div
-                key={place?.place_id}
-                className="bg-white rounded-lg text-start group"
-              >
-                <button
-                  onClick={() => {
-                    setSelectPosition({
-                      lat: place?.lat,
-                      lon: place?.lon,
-                    });
-                    setSearchText(place?.display_name);
-                    setListPlace([]);
-                  }}
-                  className="w-full group-hover:bg-gray-200 p-2"
+        <div className="rounded-lg bg-white mx-auto text-start w-full">
+          {/* Conditionally render "No data found" */}
+          {/* {hasTyped && !searchText &&listPlace.length === 0 && (
+            <div className="w-full py-5 px-2 text-center">No data found.</div>
+          )} */}
+          {listPlace.length > 0 &&
+            listPlace.map((place) => {
+              return (
+                <div
+                  key={place?.place_id}
+                  className="bg-white rounded-lg text-start group w-full"
                 >
-                  <p className="text-start">{place?.display_name}</p>
-                </button>
-              </div>
-            );
-          })}
+                  <button
+                    onClick={() => {
+                      setSelectPosition({
+                        lat: place?.lat,
+                        lon: place?.lon,
+                      });
+                      setSearchText(place?.display_name);
+                      setListPlace([]);
+                    }}
+                    className="w-full group-hover:bg-gray-200 p-2"
+                  >
+                    <p className="text-start">{place?.display_name}</p>
+                  </button>
+                </div>
+              );
+            })}
         </div>
       </div>
     </div>

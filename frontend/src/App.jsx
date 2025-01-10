@@ -2,7 +2,7 @@ import MyRoutes from "./MyRoutes";
 import { ToastContainer } from "react-toastify";
 import { useLoadingStore } from "./store/loading.store";
 import LoadingIndicator from "./components/LoadingIndicator";
-import { createUser } from "./api/auth";
+// import { createUser } from "./api/auth";
 
 function App() {
   const { loading } = useLoadingStore();
