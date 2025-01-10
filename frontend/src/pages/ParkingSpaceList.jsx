@@ -44,7 +44,7 @@ const ParkingSpaceList = () => {
             <div
               key={index}
               className="relative flex bg-white p-4 rounded-lg date-badge-parent justify-between items-center mb-4 gap-4 cursor-pointer "
-              onClick={() => navigate(`/reservations/[${2}]`)}
+              onClick={() => navigate(`/owner/parking-spaces/[${2}]`)}
             >
               <div className="date-badge">
                 Apr
