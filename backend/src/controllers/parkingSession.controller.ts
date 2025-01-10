@@ -1,6 +1,6 @@
-import parkingModel from "../models/parking.model";
+import parkingModel, { TParking } from "../models/parking.model";
 import logger from "../logger";
-import vehicleModel from "../models/vehicle.model";
+import vehicleModel, { TVehicle } from "../models/vehicle.model";
 import parkingSessionModel from "../models/parking-session.model";
 
 async function recordEntry(req: any, res: any, next: any) {
@@ -89,20 +89,16 @@ async function recordExit(req: any, res: any, next: any) {
 			1000;
 		const durationInHours = Math.ceil(durationInSeconds / 3600);
 
-		// reserved, under free minutes
-		let status = "";
-
-		if (!parkingId.hourlyRates) {
+		if (!parkingObj.hourlyRates) {
 			parkingSessionObj.totalCost = 0;
-			status = `Free Parking`;
+			parkingSessionObj.status = `Free Parking`;
 		} else {
 			const vehicleRates =
-				parkingObj.hourlyRates &&
 				parkingObj.hourlyRates[vehicleObj.vehicleType || "TWO_WHEELER"];
 
 			if (!vehicleRates) {
 				parkingSessionObj.totalCost = 0;
-				status = `Free Parking`;
+				parkingSessionObj.status = `Free Parking`;
 				await parkingSessionObj.save();
 
 				return res.json({
@@ -114,11 +110,11 @@ async function recordExit(req: any, res: any, next: any) {
 
 			if (durationInSeconds < vehicleRates.freeMinutes * 60) {
 				parkingSessionObj.totalCost = 0;
-				status = `Under free minutes (${vehicleRates.freeMinutes} min)`;
+				parkingSessionObj.status = `Under free minutes (${vehicleRates.freeMinutes} min)`;
 			} else {
 				parkingSessionObj.totalCost =
 					durationInHours * vehicleRates.ratePerHour;
-				status = "Charged";
+				parkingSessionObj.status = "Charged";
 			}
 		}
 		// if reservation cha bhaye "Free for reservation"
@@ -135,4 +131,84 @@ async function recordExit(req: any, res: any, next: any) {
 	}
 }
 
-export default { recordEntry, recordExit };
+async function findParkedVehiclesOfUser(req: any, res: any, next: any) {
+	const { userId } = req.params;
+	logger.log.info({
+		message: `Inside parking controller to find currently parked vehicles`,
+		reqId: req.id,
+		ip: req.headers["x-forwarded-for"] || req.socket.remoteAddress,
+		api: "/user/parked-vehicles",
+		method: "GET",
+	});
+	try {
+		const vehicleObjs = await vehicleModel.find({
+			userId,
+		});
+		let vehicleIds: any[] = [];
+		if (vehicleObjs.length > 0) {
+			vehicleIds = vehicleObjs.map((vo) => vo._id);
+		}
+
+		const parkingSessions = await parkingSessionModel
+			.find({
+				exitTime: null,
+				vehicleId: { $in: vehicleIds },
+			})
+			.populate("parkingId")
+			.populate("vehicleId");
+
+		// calculate price
+		parkingSessions.forEach((parkingSession) => {
+			const currentDate = new Date();
+			const durationInSeconds =
+				(currentDate.getTime() - parkingSession.entryTime.getTime()) /
+				1000;
+			const durationInHours = Math.ceil(durationInSeconds / 3600);
+
+			// reserved, under free minutes
+			const parkingObj: TParking =
+				parkingSession.parkingId as unknown as TParking;
+			const vehicleObj: TVehicle =
+				parkingSession.vehicleId as unknown as TVehicle;
+			if (!parkingObj.hourlyRates) {
+				parkingSession.totalCost = 0;
+				parkingSession.status = `Free Parking`;
+			} else {
+				const vehicleRates =
+					parkingObj.hourlyRates[
+						vehicleObj.vehicleType || "TWO_WHEELER"
+					];
+
+				if (!vehicleRates) {
+					parkingSession.totalCost = 0;
+					parkingSession.status = `Free Parking`;
+
+					return res.json({
+						vehicle: vehicleObj,
+						parkingSession: parkingSession,
+						parking: parkingObj,
+					});
+				}
+
+				if (durationInSeconds < vehicleRates.freeMinutes * 60) {
+					parkingSession.totalCost = 0;
+					parkingSession.status = `Under free minutes (${vehicleRates.freeMinutes} min)`;
+				} else {
+					parkingSession.totalCost =
+						durationInHours * vehicleRates.ratePerHour;
+					parkingSession.status = "Charging";
+				}
+			}
+		});
+
+		res.json({
+			vehicles: vehicleObjs,
+			parkingSessions,
+		});
+	} catch (err) {
+		logger.log.error({ reqId: req.id, message: err });
+		return next(err);
+	}
+}
+
+export default { recordEntry, recordExit, findParkedVehiclesOfUser };

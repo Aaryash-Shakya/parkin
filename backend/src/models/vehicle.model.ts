@@ -1,5 +1,12 @@
 import { model, Schema } from "mongoose";
 
+export type TVehicle = {
+	userId: string;
+	size: number;
+	vehicleType: "TWO_WHEELER" | "FOUR_WHEELER";
+	registrationNumber: string;
+};
+
 const vehicleSchema = new Schema(
 	{
 		userId: {

@@ -1,5 +1,15 @@
 import { model, Schema } from "mongoose";
 
+export type TParkingSession = {
+	parkingId: string;
+	vehicleId: string;
+	entryTime: Date;
+	exitTime?: Date;
+	totalCost?: number;
+	status?: string;
+	vehicleType: "TWO_WHEELER" | "FOUR_WHEELER";
+};
+
 const parkingSessionSchema = new Schema(
 	{
 		parkingId: {
@@ -22,6 +32,10 @@ const parkingSessionSchema = new Schema(
 		},
 		totalCost: {
 			type: Number,
+			required: false,
+		},
+		status: {
+			type: String,
 			required: false,
 		},
 		vehicleType: {

@@ -1,5 +1,37 @@
 import { model, Schema } from "mongoose";
 
+export type TParking = {
+	name: string;
+	address: string;
+	location: {
+		type: string;
+		coordinates: [number, number];
+	};
+	capacity: number;
+	reservedSlots?: number;
+	maxHeightInMeter?: number;
+	hourlyRates?: {
+		TWO_WHEELER: {
+			ratePerHour: number;
+			freeMinutes: number;
+		};
+		FOUR_WHEELER: {
+			ratePerHour: number;
+			freeMinutes: number;
+		};
+	};
+	monthlyRates?: {
+		TWO_WHEELER: {
+			ratePerMonth: number;
+		};
+		FOUR_WHEELER: {
+			ratePerMonth: number;
+		};
+	};
+	features: string[];
+	userId: string;
+};
+
 const parkingSchema = new Schema(
 	{
 		// KEC Underground parking
