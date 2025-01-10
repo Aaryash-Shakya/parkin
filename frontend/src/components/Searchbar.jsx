@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { IoSearch } from "react-icons/io5";
 import Location from "../assets/location.svg";
+import Logo from "../assets/logo/logo.svg";
+import LogoWithoutBg from "../assets/logo/logo-nobg.svg";
 
 const NOMINATIM_BASE_URL = "https://nominatim.openstreetmap.org/search?";
 
@@ -9,6 +11,7 @@ const Searchbar = (props) => {
   const { selectPosition, setSelectPosition } = props;
   const [searchText, setSearchText] = useState("");
   const [listPlace, setListPlace] = useState([]);
+  const [isFocused, setIsFocused] = useState(false);
   let params = {
     q: "",
     format: "json",
@@ -45,16 +48,35 @@ const Searchbar = (props) => {
         <div className="flex items-center justify-center relative w-full mx-auto">
           <input
             type="text"
-            className="pr-[4.5rem] py-4 pl-5 rounded-full border-2 w-full border-white text-md shadow-[0_4px_20px_4px_rgba(0,0,0,0.2)] focus:border-2 focus:border-primary outline-none"
+            className={`pr-[4.5rem] py-4 rounded-full border-2 w-full border-white text-md shadow-[0_4px_20px_4px_rgba(0,0,0,0.2)] focus:border-2 focus:border-primary outline-none
+             ${isFocused || searchText ? "pl-6" : "pl-12"}`}
             placeholder="search parking by location"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
           />
           <div
-            className="search-icon absolute right-0 bg-primary p-5 rounded-full"
+            className={`search-icon absolute left-0  p-5 rounded-full transition-opacity duration-100 ${
+              isFocused || searchText ? "opacity-0" : "opacity-100"
+            }`}
+          >
+            <img
+              src={LogoWithoutBg}
+              alt="ParkIn Logo"
+              className="w-[1.15rem] h-[1.15rem] object-contain object-center"
+            />
+          </div>
+          <div
+            className={`search-icon absolute right-0  p-5 rounded-full transition-all duration-150 ease-in-out ${
+              isFocused ? "bg-primary" : "bg-background"
+            }`}
             onClick={handleClick}
           >
-            <IoSearch size={25} className="text-white" />
+            <IoSearch
+              size={25}
+              className={`${isFocused ? "text-white" : "text-black"}`}
+            />
           </div>
         </div>
         <div className="rounded-2xl bg-white mx-auto text-start flex flex-col max-w-full shadow-md z-40 max-h-[85vh] overflow-y-scroll">
