@@ -9,7 +9,7 @@ async function registerUser(req: any, res: any, next: any) {
 		message: `Inside user controller to register user`,
 		reqId: req.id,
 		ip: req.headers["x-forwarded-for"] || req.socket.remoteAddress,
-		api: "/register",
+		api: "/user/register",
 		method: "POST",
 	});
 	if (!name || !phone || !password || !type) {
@@ -37,7 +37,8 @@ async function registerUser(req: any, res: any, next: any) {
 			.status(201)
 			.json({ message: "User registered successfully" });
 	} catch (error) {
-		return res.status(500).json({ message: "Server error", error });
+		logger.log.error({ reqId: req.id, message: error });
+		return next(error);
 	}
 }
 
@@ -48,7 +49,7 @@ async function loginUser(req: any, res: any, next: any) {
 		message: `Inside user controller to login user`,
 		reqId: req.id,
 		ip: req.headers["x-forwarded-for"] || req.socket.remoteAddress,
-		api: "/login",
+		api: "/user/login",
 		method: "POST",
 	});
 	if (!phone || !password) {
@@ -70,7 +71,8 @@ async function loginUser(req: any, res: any, next: any) {
 			.status(200)
 			.json({ message: "User logged in successfully", data: user });
 	} catch (error) {
-		return res.status(500).json({ message: "Server error", error });
+		logger.log.error({ reqId: req.id, message: error });
+		return next(error);
 	}
 }
 
