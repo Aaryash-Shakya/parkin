@@ -4,7 +4,7 @@ export const useUserStore = create((set, get) => ({
   userData: {
     name: "",
     email: "",
-    type: "OPERATOR",
+    type: "USER",
     userId: "",
     isAuthenticated: false,
   },

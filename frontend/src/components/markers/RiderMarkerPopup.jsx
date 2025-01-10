@@ -8,6 +8,8 @@ const RiderMarkerPopup = ({ setShowContent }) => {
     return navigate("/reserve-parking");
   };
 
+  const additionalFeatures = ["CCTV", "EV Charging"];
+
   return (
     <div>
       <div className="flex gap-4 mb-2">
@@ -15,7 +17,7 @@ const RiderMarkerPopup = ({ setShowContent }) => {
           <img src="/bike-icon-purple.svg" className="w-5 green-img" alt="" />
           10
         </div>
-        <div className="flex gap-1 font-semibold text-yellow items-center">
+        <div className="flex gap-1 font-semibold text-yellow-600 items-center">
           <img src="/bike-icon-purple.svg" className="w-5 yellow-img" alt="" />
           10
         </div>
@@ -39,6 +41,17 @@ const RiderMarkerPopup = ({ setShowContent }) => {
       <div className="flex justify-between mb-2">
         <span className="text-gray-600">Price/hr</span>
         <span className="font-medium">Rs. 40</span>
+      </div>
+
+      <div className="flex gap-2">
+        {additionalFeatures.map((feat) => (
+          <div
+            className="font-semibold text-xs border-2 border-primary rounded-2xl px-3 py-1 text-primary bg-[#8001ff33]"
+            key={feat}
+          >
+            {feat}
+          </div>
+        ))}
       </div>
 
       <div className="flex gap-4">
