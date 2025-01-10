@@ -5,7 +5,8 @@ import SignUp from "./pages/SignUp";
 import BottomNavbar from "./components/BottomNavbar";
 import Reservation from "./pages/Reservation";
 import ReservationListing from "./pages/ReservationListing";
-import ReservationDetails from "./components/reservations/ReservationDetails";
+import ReservationDetails from "./pages/ReservationDetails";
+import ParkingStatus from "./pages/ParkingStatus";
 
 const MyRoutes = () => {
   return (
@@ -17,6 +18,7 @@ const MyRoutes = () => {
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/reserve-parking" element={<Reservation />} />
           <Route path="/reservations" element={<ReservationListing />} />
+          <Route path="/parking" element={<ParkingStatus />} />
           <Route path="/reservations/:id" element={<ReservationDetails />} />
         </Routes>
         <BottomNavbar />
