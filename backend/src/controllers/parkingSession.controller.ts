@@ -89,20 +89,37 @@ async function recordExit(req: any, res: any, next: any) {
 			1000;
 		const durationInHours = Math.ceil(durationInSeconds / 3600);
 
-		const vehicleRates = parkingObj.hourlyRates.filter(
-			(rates) => rates.vehicleType === vehicleObj.vehicleType,
-		)[0];
-
 		// reserved, under free minutes
 		let status = "";
 
-		if (durationInSeconds < vehicleRates.freeMinutes * 60) {
+		if (!parkingId.hourlyRates) {
 			parkingSessionObj.totalCost = 0;
-			status = `Under free minutes (${vehicleRates.freeMinutes} min)`;
+			status = `Free Parking`;
 		} else {
-			parkingSessionObj.totalCost =
-				durationInHours * vehicleRates.ratePerHour;
-			status = "Charged";
+			const vehicleRates =
+				parkingObj.hourlyRates &&
+				parkingObj.hourlyRates[vehicleObj.vehicleType || "TWO_WHEELER"];
+
+			if (!vehicleRates) {
+				parkingSessionObj.totalCost = 0;
+				status = `Free Parking`;
+				await parkingSessionObj.save();
+
+				return res.json({
+					vehicle: vehicleObj,
+					parkingSession: parkingSessionObj,
+					parking: parkingObj,
+				});
+			}
+
+			if (durationInSeconds < vehicleRates.freeMinutes * 60) {
+				parkingSessionObj.totalCost = 0;
+				status = `Under free minutes (${vehicleRates.freeMinutes} min)`;
+			} else {
+				parkingSessionObj.totalCost =
+					durationInHours * vehicleRates.ratePerHour;
+				status = "Charged";
+			}
 		}
 		// if reservation cha bhaye "Free for reservation"
 		await parkingSessionObj.save();

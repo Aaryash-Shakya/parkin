@@ -33,37 +33,42 @@ const parkingSchema = new Schema(
 			type: Number,
 			required: false,
 		},
-		hourlyRates: [
-			{
-				vehicleType: {
-					type: String,
-					enum: ["TWO_WHEELER", "FOUR_WHEELER"],
-					required: true,
+		maxHeightInMeter: {
+			type: Number,
+			required: false,
+		},
+		// hourlyRates null means free parking
+		hourlyRates: {
+			type: {
+				TWO_WHEELER: {
+					ratePerHour: { type: Number, required: true },
+					freeMinutes: { type: Number, default: 0, required: true },
 				},
-				ratePerHour: { type: Number, required: true },
-				freeMinutes: { type: Number, default: 10 }, // Free time in minutes before charging starts
+				FOUR_WHEELER: {
+					ratePerHour: { type: Number, required: true },
+					freeMinutes: { type: Number, default: 0, required: true },
+				},
 			},
-		],
+			required: false,
+		},
+		// monthlyRates null means no subscription
 		monthlyRates: {
-			type: [
-				{
-					vehicleType: {
-						type: String,
-						enum: ["TWO_WHEELER", "FOUR_WHEELER"],
-						required: true,
-					},
+			type: {
+				TWO_WHEELER: {
 					ratePerMonth: { type: Number, required: true },
 				},
-			],
+				FOUR_WHEELER: {
+					ratePerMonth: { type: Number, required: true },
+				},
+			},
 			required: false,
-			default: null, // Allows monthlyRates to be null if subscription isn't available
 		},
 		// Extra features rendered as a small tag in the UI
 		features: {
 			type: [
 				{
 					type: String,
-					enum: ["CCTV", "EV Charging", "Sheltered"],
+					enum: ["CCTV", "EV Charging", "Sheltered", "Free"],
 				},
 			],
 			required: false,
