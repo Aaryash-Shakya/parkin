@@ -62,3 +62,16 @@ body {
   justify-content: center;
   color: white;
 }
+
+.green-img {
+  filter: invert(46%) sepia(87%) saturate(923%) hue-rotate(104deg)
+    brightness(84%) contrast(83%);
+}
+.yellow-img {
+  filter: invert(48%) sepia(96%) saturate(454%) hue-rotate(3deg) brightness(96%)
+    contrast(97%);
+}
+.red-img {
+  filter: invert(25%) sepia(98%) saturate(7470%) hue-rotate(358deg)
+    brightness(91%) contrast(123%);
+}

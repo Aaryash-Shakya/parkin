@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
 import { useNavigate } from "react-router-dom";
 import { useMarkerPopUpStore } from "../../store/useMarkerPopUp.store";
 import Button from "../form/Button";
+import RiderMarkerPopup from "./RiderMarkerPopup";
 
 const MarkerPopUp = () => {
   const {
@@ -38,7 +40,7 @@ const MarkerPopUp = () => {
           X
         </button>
 
-        <div>
+        {/* <div>
           <h3 className="text-xl font-semibold text-gray-800 mb-3">
             Add Your Parking Location
           </h3>
@@ -61,7 +63,9 @@ const MarkerPopUp = () => {
             onClick={handleCreationNavigation}
             styles="bg-primary text-white hover:bg-blue-700 transition-all duration-0 hover:duration-150 ease-in-out"
           />
-        </div>
+        </div> */}
+
+        <RiderMarkerPopup setShowContent={setShowContent} />
       </div>
     </div>
   );
