@@ -6,6 +6,7 @@ import BottomNavbar from "./components/BottomNavbar";
 import Reservation from "./pages/Reservation";
 import ReservationListing from "./pages/ReservationListing";
 import ReservationDetails from "./components/reservations/ReservationDetails";
+import Setting from "./pages/Setting";
 
 const MyRoutes = () => {
   return (
@@ -18,6 +19,7 @@ const MyRoutes = () => {
           <Route path="/reserve-parking" element={<Reservation />} />
           <Route path="/reservations" element={<ReservationListing />} />
           <Route path="/reservations/:id" element={<ReservationDetails />} />
+          <Route path="/setting" element={<Setting />} />
         </Routes>
         <BottomNavbar />
       </BrowserRouter>
