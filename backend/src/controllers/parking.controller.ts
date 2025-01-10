@@ -8,6 +8,7 @@ async function addParking(req: any, res: any, next: any) {
 		lat,
 		long,
 		capacity,
+		maxHeightInMeter,
 		features,
 		hourlyRates,
 		monthlyRates,
@@ -17,7 +18,7 @@ async function addParking(req: any, res: any, next: any) {
 		message: `Inside parking controller to add parking ${name}`,
 		reqId: req.id,
 		ip: req.headers["x-forwarded-for"] || req.socket.remoteAddress,
-		api: "/add",
+		api: "/parking/add",
 		method: "POST",
 	});
 	try {
@@ -31,6 +32,8 @@ async function addParking(req: any, res: any, next: any) {
 				coordinates: [parseFloat(long), parseFloat(lat)],
 			};
 		if (capacity) parkingObj.capacity = parseInt(capacity);
+		if (maxHeightInMeter)
+			parkingObj.maxHeightInMeter = parseFloat(maxHeightInMeter);
 		if (features) parkingObj.features = features;
 		if (hourlyRates) parkingObj.hourlyRates = hourlyRates;
 		if (monthlyRates) parkingObj.monthlyRates = monthlyRates;
@@ -50,6 +53,7 @@ async function updateParking(req: any, res: any, next: any) {
 		lat,
 		long,
 		capacity,
+		maxHeightInMeter,
 		features,
 		hourlyRates,
 		monthlyRates,
@@ -58,7 +62,7 @@ async function updateParking(req: any, res: any, next: any) {
 		message: `Inside parking controller to update parking ${name}`,
 		reqId: req.id,
 		ip: req.headers["x-forwarded-for"] || req.socket.remoteAddress,
-		api: "/update/:parkingId",
+		api: "/parking/update/:parkingId",
 		method: "PUT",
 	});
 	try {
@@ -74,6 +78,8 @@ async function updateParking(req: any, res: any, next: any) {
 				coordinates: [parseFloat(long), parseFloat(lat)],
 			};
 		if (capacity) parkingObj.capacity = parseInt(capacity);
+		if (maxHeightInMeter)
+			parkingObj.maxHeightInMeter = parseFloat(maxHeightInMeter);
 		if (features) parkingObj.features = features;
 		if (hourlyRates) parkingObj.hourlyRates = hourlyRates;
 		if (monthlyRates) parkingObj.monthlyRates = monthlyRates;
@@ -91,7 +97,7 @@ async function findNearbyParking(req: any, res: any, next: any) {
 		message: `Inside parking controller to find nearby parkings ${lat} ${long}`,
 		reqId: req.id,
 		ip: req.headers["x-forwarded-for"] || req.socket.remoteAddress,
-		api: "/nearby",
+		api: "/parking/nearby",
 		method: "GET",
 	});
 	try {
