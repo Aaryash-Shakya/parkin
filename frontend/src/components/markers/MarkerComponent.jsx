@@ -12,6 +12,7 @@ const MarkerComponent = (props) => {
       icon={icon}
       eventHandlers={{
         click: () => {
+          // Show the popup
           if (onClick) onClick(latitude, longitude);
         },
       }}

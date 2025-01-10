@@ -13,6 +13,7 @@ import ParkingSpaceList from "./pages/ParkingSpaceList";
 import ParkingSpaceDetails from "./pages/ParkingSpaceDetails";
 import ParkingStatusList from "./pages/ParkingStatusList";
 import OwnerParkingStatus from "./pages/OwnerParkingStatus";
+import MarkerPopUp from "./components/markers/MarkerPopUp";
 
 const MyRoutes = () => {
   return (
@@ -45,6 +46,8 @@ const MyRoutes = () => {
             element={<OwnerParkingStatus />}
           />
         </Routes>
+        <MarkerPopUp />
+
         <BottomNavbar />
       </BrowserRouter>
     </>
