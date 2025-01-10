@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { IoSearch } from "react-icons/io5";
+import Location from "../assets/location.svg";
 
 const NOMINATIM_BASE_URL = "https://nominatim.openstreetmap.org/search?";
 
@@ -44,22 +45,32 @@ const Searchbar = (props) => {
         <div className="flex items-center justify-center relative w-full mx-auto">
           <input
             type="text"
-            className="px-4 py-4 pl-5 rounded-full border-2 w-full border-white text-md shadow-[0_4px_20px_4px_rgba(0,0,0,0.2)] focus:border-2 focus:border-black-500 outline-none"
-            placeholder="search"
+            className="pr-[4.5rem] py-4 pl-5 rounded-full border-2 w-full border-white text-md shadow-[0_4px_20px_4px_rgba(0,0,0,0.2)] focus:border-2 focus:border-primary outline-none"
+            placeholder="search parking by location"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
-          <div className="search-icon absolute right-8" onClick={handleClick}>
-            <IoSearch size={25} className="text-black-500" />
+          <div
+            className="search-icon absolute right-0 bg-primary p-5 rounded-full"
+            onClick={handleClick}
+          >
+            <IoSearch size={25} className="text-white" />
           </div>
         </div>
-        <div className="rounded-lg bg-white md:w-2/3 mx-auto text-start">
-          {listPlace.map((place) => {
+        <div className="rounded-2xl bg-white mx-auto text-start flex flex-col max-w-full shadow-md z-40 max-h-[85vh] overflow-y-scroll">
+          {listPlace.map((place, index) => {
             return (
               <div
                 key={place?.place_id}
-                className="bg-white rounded-lg text-start group"
+                className={`flex gap-3 items-center justify-start bg-white rounded-lg text-start px-4 py-4 ${
+                  index !== listPlace.length - 1
+                    ? "border-b-2 border-background"
+                    : "border-none"
+                }`}
               >
+                <div className="p-4 rounded-full bg-background aspect-square w-14 h-14">
+                  <img src={Location} alt="" className="w-full h-full" />
+                </div>
                 <button
                   onClick={() => {
                     setSelectPosition({
@@ -69,9 +80,11 @@ const Searchbar = (props) => {
                     setSearchText(place?.display_name);
                     setListPlace([]);
                   }}
-                  className="w-full group-hover:bg-gray-200 p-2"
+                  className="flex items-center flex-wrap overflow-hidden"
                 >
-                  <p className="text-start">{place?.display_name}</p>
+                  <p className="text-start text-sm line-clamp-2 overflow-hidden text-ellipsis">
+                    {place?.display_name}
+                  </p>
                 </button>
               </div>
             );
