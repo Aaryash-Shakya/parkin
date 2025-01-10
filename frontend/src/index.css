@@ -24,3 +24,7 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+.leaflet-control-container{
+  @apply hidden;
+}
