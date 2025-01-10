@@ -1,7 +1,16 @@
+import { useNavigate } from "react-router-dom";
+import Button from "../components/form/Button";
 import PageHeader from "../components/PageHeader";
 import { formatISODate } from "../helpers";
 
 const ParkingStatus = () => {
+  const navigate = useNavigate();
+
+  const handleMapViewClick = () => {
+    navigate("/");
+    // other logic to move the marker and camera to the lat lng
+  };
+
   const reservation = {
     displayName: "Kathmandu Medical College and research center",
     lat: 27.708317,
@@ -59,6 +68,11 @@ const ParkingStatus = () => {
             </div>
           </div>
         </div>
+        <Button
+          title="View On Map"
+          onClick={handleMapViewClick}
+          styles="bg-primary text-white hover:bg-blue-700 transition-all duration-0 hover:duration-150 ease-in-out"
+        />
       </div>
     </>
   );

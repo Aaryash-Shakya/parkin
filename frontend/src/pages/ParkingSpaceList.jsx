@@ -47,8 +47,8 @@ const ParkingSpaceList = () => {
               onClick={() => navigate(`/owner/parking-spaces/${2}`)}
             >
               <div className="date-badge">
-                Apr
-                <span>22</span>
+                Jan
+                <span>12</span>
               </div>
               <div>
                 <div>
