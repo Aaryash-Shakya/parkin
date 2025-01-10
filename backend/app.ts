@@ -1,4 +1,10 @@
-import express, { Request, Response, NextFunction, Application, ErrorRequestHandler } from "express";
+import express, {
+	Request,
+	Response,
+	NextFunction,
+	Application,
+	ErrorRequestHandler,
+} from "express";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import compression from "compression";
@@ -50,7 +56,12 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 	next(new createHttpError.NotFound());
 });
 
-const errorHandler: ErrorRequestHandler = (err, req: Request, res: Response, next: NextFunction) => {
+const errorHandler: ErrorRequestHandler = (
+	err,
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
 	res.status(err.statusCode || 500);
 	res.send({
 		status: err.statusCode || 500,
@@ -73,6 +84,10 @@ if (!config.mongoUri) {
 }
 mongoose
 	.connect(config.mongoUri)
-	.then(() => app.listen(port, () => console.log(`Server is running on port ${port}`)))
-	.catch(err => console.log(err));
-
+	.then(() =>
+		app.listen(port, () => {
+			console.log("Connected to db");
+			console.log(`Server is running on port ${port}`);
+		}),
+	)
+	.catch((err) => console.log(err));
