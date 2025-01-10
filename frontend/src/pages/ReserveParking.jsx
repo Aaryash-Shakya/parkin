@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { useReservationStore } from "../../store/reservation.store";
-import Button from "../form/Button";
-import FormInput from "../form/FormInput";
-import CustomDateTimePicker from "../form/CustomDateTimePicker";
+import { useReservationStore } from "../store/reservation.store";
+import Button from "../components/form/Button";
+import FormInput from "../components/form/FormInput";
+import CustomDateTimePicker from "../components/form/CustomDateTimePicker";
 import { toast } from "react-toastify";
 
 const ReserveParking = () => {
@@ -36,6 +36,7 @@ const ReserveParking = () => {
 
   return (
     <>
+      {/* back button implementation  */}
       <div className="bg-secondary">
         <div className="container py-4 pt-6 flex items-center gap-2 ">
           <img src="/back-icon.svg" className="w-6" alt="" />
