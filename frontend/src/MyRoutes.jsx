@@ -4,6 +4,8 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import BottomNavbar from "./components/BottomNavbar";
 import Reservation from "./pages/Reservation";
+import ReservationListing from "./pages/ReservationListing";
+import ReservationDetails from "./components/reservations/ReservationDetails";
 
 const MyRoutes = () => {
   return (
@@ -14,6 +16,8 @@ const MyRoutes = () => {
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/reserve-parking" element={<Reservation />} />
+          <Route path="/reservations" element={<ReservationListing />} />
+          <Route path="/reservations/:id" element={<ReservationDetails />} />
         </Routes>
         <BottomNavbar />
       </BrowserRouter>
