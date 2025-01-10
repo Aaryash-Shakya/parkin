@@ -14,7 +14,7 @@ export const createUser = async (userInfo) => {
 
 export const signInUser = async (userInfo) => {
   try {
-    const { data } = await client.post("/signin-route-here", userInfo);
+    const { data } = await client.post("/user/login", userInfo);
     return data;
   } catch (err) {
     const { response } = err;

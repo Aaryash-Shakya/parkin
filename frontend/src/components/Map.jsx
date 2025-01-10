@@ -69,6 +69,7 @@ const markersData = [
   {
     name: "Shandar Momo Parking ",
     latitude: 27.688329356193076,
+    // eslint-disable-next-line no-loss-of-precision
     longitude: 85.30236389186563,
     status: "Full",
     description: "Marker 3",
