@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
-import ReserveParking from "./components/reservations/ReserveParking";
+import ReserveParking from "./pages/ReserveParking";
 import BottomNavbar from "./components/BottomNavbar";
 
 const MyRoutes = () => {
@@ -15,8 +15,8 @@ const MyRoutes = () => {
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/reserve-parking" element={<ReserveParking />} />
         </Routes>
+        <BottomNavbar />
       </Router>
-      <BottomNavbar />
     </>
   );
 };
