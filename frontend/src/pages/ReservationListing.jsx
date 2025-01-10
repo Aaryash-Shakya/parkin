@@ -39,24 +39,18 @@ const ReservationListing = () => {
       <PageHeader title="Your Reservations" />
       <div className="container bg-gray-200 min-h-screen flex flex-col items-center pb-28">
         <img src="/reservation-list.png" alt="" />
-        <div className="flex gap-2 mb-6">
-          <div className="text-xs font-medium flex items-center text-gray-500">
-            <StatusBadge status="success" /> Upcoming
-          </div>
-          <div className="text-xs font-medium flex items-center text-gray-500">
-            <StatusBadge status="warning" /> Ongoing
-          </div>
-          <div className="text-xs font-medium flex items-center text-gray-500">
-            <StatusBadge status="error" /> Expired
-          </div>
-        </div>
+
         <div>
           {reservations.map((reservation, index) => (
             <div
               key={index}
-              className="flex justify-between items-center bg-white rounded-3xl p-4 mb-6 gap-4 border-2 border-primary cursor-pointer"
+              className="relative flex bg-white p-4 rounded-lg date-badge-parent justify-between items-center mb-4 gap-4 cursor-pointer "
               onClick={() => navigate(`/reservations/[${2}]`)}
             >
+              <div className="date-badge">
+                Apr
+                <span>22</span>
+              </div>
               <div>
                 <div>
                   <div className="text-md font-medium w-full mb-2">
@@ -65,12 +59,15 @@ const ReservationListing = () => {
                 </div>
                 <div className="flex gap-2">
                   <img src="/car-icon-purple.svg" className="w-5" alt="" />
-                  <div className="text-primary font-sm font-medium">2hrs</div>
+                  <div className="text-primary flex gap-2 items-center font-sm font-medium">
+                    2hrs <span className="text-gray-300">|</span>
+                    <div className="font-semibold text-sm text-green-600">
+                      Expired
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div>
-                <StatusBadge />
-              </div>
+              <div>{/* <StatusBadge /> */}</div>
             </div>
           ))}
         </div>
