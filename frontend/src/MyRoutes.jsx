@@ -9,6 +9,7 @@ import ReservationDetails from "./pages/ReservationDetails";
 import ParkingStatus from "./pages/ParkingStatus";
 import Setting from "./pages/Setting";
 import RegisterParkingSpace from "./pages/RegisterParkingSpace";
+import ParkingSpaceList from "./pages/ParkingSpaceList";
 
 const MyRoutes = () => {
   return (
@@ -27,6 +28,7 @@ const MyRoutes = () => {
             path="/owner/register-space"
             element={<RegisterParkingSpace />}
           />
+          <Route path="/owner/parking-spaces" element={<ParkingSpaceList />} />
         </Routes>
         <BottomNavbar />
       </BrowserRouter>

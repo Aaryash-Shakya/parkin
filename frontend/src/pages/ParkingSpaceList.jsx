@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import PageHeader from "../components/PageHeader";
 
-const ReservationListing = () => {
+const ParkingSpaceList = () => {
   const navigate = useNavigate();
 
   const reservations = [
@@ -35,7 +35,7 @@ const ReservationListing = () => {
   ];
   return (
     <>
-      <PageHeader title="Your Reservations" />
+      <PageHeader title="Your Parking Locations" />
       <div className="container bg-gray-200 min-h-screen flex flex-col items-center pb-28">
         <img src="/reservation-list.png" alt="" />
 
@@ -57,11 +57,11 @@ const ReservationListing = () => {
                   </div>
                 </div>
                 <div className="flex gap-2">
-                  <img src="/car-icon-purple.svg" className="w-5" alt="" />
+                  <img src="/bike-icon-purple.svg" className="w-5" alt="" />
                   <div className="text-primary flex gap-2 items-center font-sm font-medium">
-                    2hrs <span className="text-gray-300">|</span>
-                    <div className="font-semibold text-sm text-green-600">
-                      Expired
+                    50 <span className="text-gray-300">|</span>
+                    <div className="font-semibold text-sm text-primary">
+                      Rs. 40/hr
                     </div>
                   </div>
                 </div>
@@ -75,4 +75,4 @@ const ReservationListing = () => {
   );
 };
 
-export default ReservationListing;
+export default ParkingSpaceList;
