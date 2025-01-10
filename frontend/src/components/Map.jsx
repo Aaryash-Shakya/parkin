@@ -6,6 +6,9 @@ import ParkingIcon from "/marker.svg";
 import CurrentIcon from "/current.svg";
 import MarkerComponent from "./markers/MarkerComponent";
 import AddNewMarker from "./markers/AddNewMarkers";
+import RoutingComponent from "./markers/RoutingComponent";
+import { useMarkerStore } from "../store/useMarker.store";
+import { useMarkerPopUpStore } from "../store/useMarkerPopUp.store";
 
 const searchAreaIcon = L.icon({
   iconUrl: CurrentIcon, // current location icon
@@ -17,6 +20,10 @@ const parkingIcon = L.icon({
 });
 
 const currentPosition = [27.698865, 85.297047]; // Default center position
+
+// const PointA = [27.691005, 85.300813]; // Example coordinates for Point A
+// const PointB = [27.689751, 85.299434
+// ]; // Example coordinates for Point B`
 
 function ResetCenterView(props) {
   const { selectPosition } = props;
@@ -72,9 +79,14 @@ const Map = (props) => {
   const { selectPosition } = props; // markersData is the JSON array of marker data
   const locationSelection = [selectPosition?.lat, selectPosition?.lon];
 
-  const handleMarkerClick = (latitude, longitude) => {
-    console.log(`Marker clicked at ${latitude}, ${longitude}`);
-  };
+  const { startPosition, endPosition } = useMarkerStore();
+  const { setMarkerContent, toggleContent } = useMarkerPopUpStore();
+
+  // const [showContent, setShowContent] = useState(false);
+
+  // const handleMarkerClick = (latitude, longitude) => {
+  //   setShowContent(true);
+  // };
 
   return (
     <MapContainer
@@ -94,10 +106,17 @@ const Map = (props) => {
           latitude={marker.latitude}
           longitude={marker.longitude}
           description={marker.description}
+          onClick={() => {
+            setMarkerContent({
+              latitude: marker.latitude,
+              longitude: marker.longitude,
+              description: "This is a custom marker!",
+            });
+            toggleContent();
+          }}
           icon={parkingIcon}
           status={marker.status}
           name={marker.name}
-          onClick={handleMarkerClick}
         />
       ))}
 
@@ -108,6 +127,14 @@ const Map = (props) => {
           longitude={locationSelection[1]}
           icon={searchAreaIcon}
           description="Search Area"
+          onClick={() => {
+            setMarkerContent({
+              latitude: locationSelection[0],
+              longitude: locationSelection[1],
+              description: "This is a custom marker!",
+            });
+            toggleContent();
+          }}
         />
       )}
 
@@ -121,6 +148,7 @@ const Map = (props) => {
       )}
       <ResetCenterView selectPosition={selectPosition} />
       <AddNewMarker />
+      <RoutingComponent from={startPosition} to={endPosition} />
     </MapContainer>
   );
 };
