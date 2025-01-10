@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { IoSearch } from "react-icons/io5";
 import Location from "../assets/location.svg";
+import Logo from "../assets/logo/logo.svg";
 import LogoWithoutBg from "../assets/logo/logo-nobg.svg";
-
 const NOMINATIM_BASE_URL = "https://nominatim.openstreetmap.org/search?";
-
 const Searchbar = (props) => {
   // eslint-disable-next-line no-unused-vars
   const { selectPosition, setSelectPosition } = props;
@@ -39,23 +38,22 @@ const Searchbar = (props) => {
       })
       .catch((err) => console.log("err: ", err));
   };
-  useEffect(() => {
-    if (!searchText) {
-      setListPlace([]);
-      return;
-    }
-
-    // setHasTyped(true); // Mark that user has started typing
-
-    const debounceTimer = setTimeout(() => {
-      fetchPlaces(searchText);
-    }, 500); // Delay of 500ms
-
-    return () => {
-      clearTimeout(debounceTimer);
-    }; // Cleanup
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchText]);
+    useEffect(() => {
+      if (!searchText) {
+        setListPlace([]);
+        return;
+      }
+  
+      // setHasTyped(true); // Mark that user has started typing
+  
+      const debounceTimer = setTimeout(() => {
+        fetchPlaces(searchText);
+      }, 500); // Delay of 500ms
+  
+      return () => {
+        clearTimeout(debounceTimer);
+      }; // Cleanup
+    }, [searchText]);
   return (
     <div className="absolute top-2 left-0 w-full py-2 px-4 z-50">
       <div className="flex flex-col gap-2 w-full">
@@ -131,3 +129,9 @@ const Searchbar = (props) => {
   );
 };
 export default Searchbar;
+
+
+
+
+
+
