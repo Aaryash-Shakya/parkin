@@ -1,10 +1,7 @@
-import React, { useState } from "react";
-
 import navigations from "../constants/navigations";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const BottomNavbar = () => {
-  const [activeButton, setActiveButton] = useState("Home");
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
