@@ -100,7 +100,7 @@ const parkingSchema = new Schema(
 			type: [
 				{
 					type: String,
-					enum: ["CCTV", "EV Charging", "Sheltered", "Free"],
+					enum: ["CCTV", "EV Charging", "Sheltered", "Free", "24 Hours"],
 				},
 			],
 			required: false,
