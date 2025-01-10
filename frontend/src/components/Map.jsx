@@ -5,6 +5,7 @@ import L from "leaflet";
 import MyIcon from "/vite.svg";
 import MarkerComponent from "./markers/MarkerComponent";
 import AddNewMarker from "./markers/AddNewMarkers";
+import RoutingComponent from "./markers/RoutingComponent";
 
 const searchAreaIcon = L.icon({
   iconUrl: MyIcon,
@@ -16,6 +17,9 @@ const parkingIcon = L.icon({
 });
 
 const currentPosition = [27.698865, 85.297047]; // Default center position
+const PointA = [27.691005, 85.300813]; // Example coordinates for Point A
+const PointB = [27.689751, 85.299434
+]; // Example coordinates for Point B`
 
 function ResetCenterView(props) {
   const { selectPosition } = props;
@@ -60,10 +64,11 @@ const markersData = [
 const Map = (props) => {
   const { selectPosition } = props; // markersData is the JSON array of marker data
   const locationSelection = [selectPosition?.lat, selectPosition?.lon];
+  // const [showContent, setShowContent] = useState(false);
 
-  const handleMarkerClick = (latitude, longitude) => {
-    console.log(`Marker clicked at ${latitude}, ${longitude}`);
-  };
+  // const handleMarkerClick = (latitude, longitude) => {
+  //   setShowContent(true);
+  // };
 
   return (
     <MapContainer
@@ -83,7 +88,7 @@ const Map = (props) => {
           longitude={marker.longitude}
           description={marker.description}
           icon={marker.icon}
-          onClick={handleMarkerClick}
+          // onClick={handleMarkerClick}
         />
       ))}
 
@@ -106,6 +111,7 @@ const Map = (props) => {
       )}
       <ResetCenterView selectPosition={selectPosition} />
       <AddNewMarker />
+      <RoutingComponent from={PointA} to={PointB} />
     </MapContainer>
   );
 };

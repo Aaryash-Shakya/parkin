@@ -1,7 +1,7 @@
 import { useMap } from "react-leaflet";
 import L from "leaflet";
 import { useState } from "react";
-import { useNewMarkerStore } from "../../store/newMarker.store";
+import { useMarkerStore } from "../../store/useMarker.store";
 import MarkerComponent from "./MarkerComponent";
 
 const newIcon = L.icon({
@@ -10,7 +10,7 @@ const newIcon = L.icon({
 });
 
 const AddNewMarker = () => {
-  const { setNewMarker, clearNewMarker } = useNewMarkerStore();
+  const { setNewMarker, clearNewMarker } = useMarkerStore();
 
   const [markerPosition, setMarkerPosition] = useState(null); // Local state to track the marker position
 
