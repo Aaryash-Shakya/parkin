@@ -2,17 +2,18 @@ import { useEffect } from "react";
 import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import MyIcon from "/vite.svg";
+import ParkingIcon from "/marker.svg";
+import CurrentIcon from "/current.svg";
 import MarkerComponent from "./markers/MarkerComponent";
 import AddNewMarker from "./markers/AddNewMarkers";
 
 const searchAreaIcon = L.icon({
-  iconUrl: MyIcon,
-  iconSize: [24, 24],
+  iconUrl: CurrentIcon, // current location icon
+  iconSize: [30, 30],
 });
 const parkingIcon = L.icon({
-  iconUrl: MyIcon,
-  iconSize: [24, 24],
+  iconUrl: ParkingIcon, // parking icon
+  iconSize: [40, 40],
 });
 
 const currentPosition = [27.698865, 85.297047]; // Default center position
@@ -38,22 +39,32 @@ function ResetCenterView(props) {
 
 const markersData = [
   {
-    latitude: 27.688418,
+    name: "Sagarmatha Parking Space",
+    latitude: 27.688418, //
     longitude: 85.301502,
+    status: "available",
     description: "Marker 1",
-    icon: parkingIcon,
   },
   {
+    name: "Everest Parking Space ",
     latitude: 27.688331,
     longitude: 85.302393,
+    status: "full",
     description: "Marker 2",
-    icon: parkingIcon,
   },
   {
+    name: "Kathmandu Parking Space ",
     latitude: 27.688329356193083,
     longitude: 85.30236389186568,
+    status: "full",
     description: "Marker 3",
-    icon: parkingIcon,
+  },
+  {
+    name: "Shandar Momo Parking ",
+    latitude: 27.688329356193076,
+    longitude: 85.30236389186563,
+    status: "Full",
+    description: "Marker 3",
   },
 ];
 
@@ -76,17 +87,21 @@ const Map = (props) => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
+      {/*  array bata data ako parking ko lagi ho  */}
       {markersData.map((marker, index) => (
         <MarkerComponent
           key={index}
           latitude={marker.latitude}
           longitude={marker.longitude}
           description={marker.description}
-          icon={marker.icon}
+          icon={parkingIcon}
+          status={marker.status}
+          name={marker.name}
           onClick={handleMarkerClick}
         />
       ))}
 
+      {/* search garera ako  */}
       {selectPosition && (
         <MarkerComponent
           latitude={locationSelection[0]}
