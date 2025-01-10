@@ -14,4 +14,8 @@ router.route("/entry").post(parkingSessionController.recordEntry);
 
 router.route("/exit").put(parkingSessionController.recordExit);
 
+router
+	.route("/parked-vehicles/:parkingId")
+	.get(parkingSessionController.listParkedVehicles);
+
 export default router;

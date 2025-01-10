@@ -211,4 +211,33 @@ async function findParkedVehiclesOfUser(req: any, res: any, next: any) {
 	}
 }
 
-export default { recordEntry, recordExit, findParkedVehiclesOfUser };
+async function listParkedVehicles(req: any, res: any, next: any) {
+	const { parkingId } = req.params;
+	logger.log.info({
+		message: `Inside parking controller to list all parked vehicles`,
+		reqId: req.id,
+		ip: req.headers["x-forwarded-for"] || req.socket.remoteAddress,
+		api: "/parking/parked-vehicles/:parkingId",
+		method: "GET",
+	});
+	try {
+		const parkingSessions = await parkingSessionModel.find({
+			exitTime: null,
+			parkingId,
+		});
+
+		res.json({
+			parkingSessions,
+		});
+	} catch (err) {
+		logger.log.error({ reqId: req.id, message: err });
+		return next(err);
+	}
+}
+
+export default {
+	recordEntry,
+	recordExit,
+	findParkedVehiclesOfUser,
+	listParkedVehicles,
+};
