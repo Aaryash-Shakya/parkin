@@ -5,8 +5,9 @@ import FormInput from "../form/FormInput";
 import CustomDateTimePicker from "../form/CustomDateTimePicker";
 import { toast } from "react-toastify";
 import FormSelect from "../form/FormSelect";
+import PageHeader from "../PageHeader";
 
-const ReserveParking = () => {
+const ReserveParking = ({ setConfirmPage }) => {
   const { reservation } = useReservationStore();
 
   const vehicleTypeOptions = [
@@ -62,12 +63,7 @@ const ReserveParking = () => {
 
   return (
     <>
-      <div className="bg-secondary">
-        <div className="container py-4 pt-6 flex items-center gap-2 ">
-          <img src="/back-icon.svg" className="w-6" alt="" />
-          <h1 className="font-bold text-xl text-gray-800">Reserve Spot</h1>
-        </div>
-      </div>
+      <PageHeader title="Reserve Parking" setConfirmPage={setConfirmPage} />
       <div className="container bg-gray-200 min-h-screen flex flex-col items-center pb-28">
         <img src="/reservation-preview.png" alt="" />
         <form onSubmit={handleSubmit}>
