@@ -100,7 +100,13 @@ const parkingSchema = new Schema(
 			type: [
 				{
 					type: String,
-					enum: ["CCTV", "EV Charging", "Sheltered", "Free"],
+					enum: [
+						"CCTV",
+						"EV Charging",
+						"Sheltered",
+						"Free",
+						"24 Hours",
+					],
 				},
 			],
 			required: false,
@@ -117,5 +123,7 @@ const parkingSchema = new Schema(
 		timestamps: true,
 	},
 );
+
+parkingSchema.set("toObject", { virtuals: true });
 
 export default model("parkings", parkingSchema);
