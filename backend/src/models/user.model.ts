@@ -6,6 +6,13 @@ enum UserType {
 	OPERATOR = "OPERATOR",
 }
 
+export type TUser = {
+	name: string;
+	phone: string;
+	password: string;
+	type: UserType;
+};
+
 const userSchema = new Schema(
 	{
 		name: {

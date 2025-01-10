@@ -1,10 +1,17 @@
 import { model, Schema } from "mongoose";
 
+export type TVehicle = {
+	userId: string;
+	size: number;
+	vehicleType: "TWO_WHEELER" | "FOUR_WHEELER";
+	registrationNumber: string;
+};
+
 const vehicleSchema = new Schema(
 	{
 		userId: {
 			type: Schema.Types.ObjectId,
-			required: true,
+			required: false,
 			ref: "users",
 		},
 		// in terms of 2 wheeler (1 unit = 1 bike)
@@ -20,6 +27,7 @@ const vehicleSchema = new Schema(
 		registrationNumber: {
 			type: String,
 			required: false,
+			unique: true,
 		},
 	},
 	{
