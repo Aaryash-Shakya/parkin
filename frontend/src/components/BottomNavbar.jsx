@@ -1,100 +1,56 @@
 import React, { useState } from "react";
-import HomeIconOutline from "../assets/home-black-outline.svg";
-import HomeIconSolid from "../assets/home-white-solid.svg";
 
-import ParkingIconOutline from "../assets/parking-black-outline.svg";
-import ParkingIconSolid from "../assets/parking-white-solid.svg";
-
-import ReserveIconOutline from "../assets/reserve-black-outline.svg";
-import ReserveIconSolid from "../assets/reserve-white-solid.svg";
-
-import SettingIconOutline from "../assets/setting-black-outline.svg";
-import SettingIconSolid from "../assets/setting-white-solid.svg";
+import navigations from "../constants/navigations";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const BottomNavbar = () => {
-  const [activeButton, setActiveButton] = useState("home");
+  const [activeButton, setActiveButton] = useState("Home");
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
 
-  const handleActive = (buttonName) => {
-    setActiveButton(buttonName);
+  const handleActive = (link) => {
+    navigate(link);
   };
 
   return (
-    <div className="px-4 absolute bottom-5 left-0 right-0 min-h-20 flex items-center justify-center">
-      <div className="flex items-center justify-center h-fit w-fit rounded-full p-1">
-        <div className="flex flex-col items-center justify-center rounded-full overflow-hidden w-[100px] h-20 border-r-0 p-1 -m-4 shadow-sm">
-          <button
-            className={`flex items-center justify-center w-full h-full rounded-[32px] ${
-              activeButton === "home" ? "bg-primary z-40" : "bg-white z-30"
+    <div
+      className={`px-4 fixed min-h-20 flex items-center justify-center z-40 transition-all ease-in-out duration-300 ${
+        pathname == "/"
+          ? "bottom-5 left-0 right-0 bg-none"
+          : "bottom-0 left-0 right-0 bg-white rounded-t-2xl shadow-[0_4px_20px_4px_rgba(0,0,0,0.2)] "
+      }`}
+    >
+      <div
+        className={`flex items-center justify-center h-fit w-fit rounded-full p-1 transition-all ease-in-out duration-300 ${
+          pathname == "/" ? "w-fit bg-none" : "w-full"
+        }`}
+      >
+        {navigations.map((nav) => (
+          <div
+            key={nav.name}
+            className={`flex flex-col items-center justify-center rounded-full overflow-hidden w-[100px] h-20 border-r-0 p-1 shadow-sm  ${
+              pathname == "/" ? "-m-3" : "m-0"
             }`}
-            type="button"
-            onClick={() => handleActive("home")}
           >
-            <img
-              src={activeButton === "home" ? HomeIconSolid : HomeIconOutline}
-              alt="activity"
-              className="w-6 h-6"
-            />
-          </button>
-        </div>
-        <div className="flex flex-col items-center justify-center rounded-full overflow-hidden w-[100px] h-20 p-1 -m-3">
-          <button
-            className={`flex items-center justify-center px-8 py-6 w-full  rounded-[32px]  ${
-              activeButton === "reservation"
-                ? "bg-primary z-40"
-                : "bg-white z-30"
-            }`}
-            type="button"
-            onClick={() => handleActive("reservation")}
-          >
-            <img
-              src={
-                activeButton === "reservation"
-                  ? ReserveIconSolid
-                  : ReserveIconOutline
-              }
-              alt="reservation"
-              className="w-6 h-6"
-            />
-          </button>
-        </div>
-        <div className="flex flex-col items-center justify-center rounded-full overflow-hidden w-[100px] h-20  p-1 -m-3">
-          <button
-            className={`flex items-center justify-center px-8 py-6 w-full  rounded-[32px] ${
-              activeButton === "parking" ? "bg-primary z-40" : "bg-white z-30"
-            }`}
-            type="button"
-            onClick={() => handleActive("parking")}
-          >
-            <img
-              src={
-                activeButton === "parking"
-                  ? ParkingIconSolid
-                  : ParkingIconOutline
-              }
-              alt="activity"
-              className="w-6 h-6"
-            />
-          </button>
-        </div>
-        <div className="flex flex-col items-center justify-center rounded-full overflow-hidden w-[100px] h-20 p-1 -m-3">
-          <button
-            className={`flex items-center justify-center px-8 py-6 w-full  rounded-[32px]  ${
-              activeButton === "setting" ? "bg-primary z-40" : "bg-white z-30"
-            }`}
-            type="button"
-            onClick={() => handleActive("setting")}
-          >
-            <img
-              src={
-                activeButton === "setting"
-                  ? SettingIconSolid
-                  : SettingIconOutline
-              }
-              alt="setting"
-              className="w-6 h-6"
-            />
-          </button>
-        </div>
+            <button
+              className={`flex items-center justify-center w-full h-full rounded-[32px] ${
+                pathname === nav.link ? "bg-primary z-40" : "bg-white z-30 "
+              }`}
+              style={{
+                boxShadow:
+                  pathname === "/" ? "3px 3px 5px rgba(0, 0, 0, 0.3)" : "none",
+              }}
+              type="button"
+              onClick={() => handleActive(nav.link)}
+            >
+              <img
+                src={pathname === nav.link ? nav.iconActive : nav.icon}
+                alt={nav.name}
+                className="w-6 h-6"
+              />
+            </button>
+          </div>
+        ))}
       </div>
     </div>
   );

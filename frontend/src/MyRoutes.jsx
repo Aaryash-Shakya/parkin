@@ -15,8 +15,8 @@ const MyRoutes = () => {
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/reserve-parking" element={<Reservation />} />
         </Routes>
+        <BottomNavbar />
       </BrowserRouter>
-      <BottomNavbar />
     </>
   );
 };
