@@ -13,19 +13,33 @@ const BottomNavbar = () => {
   };
 
   return (
-    <div className="px-4 fixed bottom-5 left-0 right-0 min-h-20 flex items-center justify-center z-40">
-      <div className="flex items-center justify-center h-fit w-fit rounded-full p-1">
+    <div
+      className={`px-4 fixed min-h-20 flex items-center justify-center z-40 transition-all ease-in-out duration-300 ${
+        pathname == "/"
+          ? "bottom-5 left-0 right-0 bg-none"
+          : "bottom-0 left-0 right-0 bg-white rounded-t-2xl shadow-[0_4px_20px_4px_rgba(0,0,0,0.2)] "
+      }`}
+    >
+      <div
+        className={`flex items-center justify-center h-fit w-fit rounded-full p-1 transition-all ease-in-out duration-300 ${
+          pathname == "/" ? "w-fit bg-none" : "w-full"
+        }`}
+      >
         {navigations.map((nav) => (
           <div
             key={nav.name}
-            className={`flex flex-col items-center justify-center rounded-full overflow-hidden w-[100px] h-20 border-r-0 p-1 shadow-sm ${
-              nav.index !== 1 ? "-m-3" : "m-0"
+            className={`flex flex-col items-center justify-center rounded-full overflow-hidden w-[100px] h-20 border-r-0 p-1 shadow-sm  ${
+              pathname == "/" ? "-m-3" : "m-0"
             }`}
           >
             <button
               className={`flex items-center justify-center w-full h-full rounded-[32px] ${
-                pathname === nav.link ? "bg-primary z-40" : "bg-white z-30"
+                pathname === nav.link ? "bg-primary z-40" : "bg-white z-30 "
               }`}
+              style={{
+                boxShadow:
+                  pathname === "/" ? "3px 3px 5px rgba(0, 0, 0, 0.3)" : "none",
+              }}
               type="button"
               onClick={() => handleActive(nav.link)}
             >
