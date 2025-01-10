@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
-import PageHeader from "../PageHeader";
-import { formatISODate } from "../../helpers";
+import PageHeader from "../components/PageHeader";
+import { formatISODate } from "../helpers";
 
 const ReservationDetails = () => {
   const { id } = useParams();
