@@ -44,7 +44,7 @@ const Searchbar = (props) => {
         <div className="flex items-center justify-center relative w-full mx-auto">
           <input
             type="text"
-            className="px-4 py-4 pl-5 rounded-full border-2 w-full border-white text-md shadow-[0_4px_20px_4px_rgba(0,0,0,0.2)] focus:border-2 focus:border-black-500 outline-none"
+            className="pr- py-4 pl-5 rounded-full border-2 w-full border-white text-md shadow-[0_4px_20px_4px_rgba(0,0,0,0.2)] focus:border-2 focus:border-black-500 outline-none"
             placeholder="search"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
