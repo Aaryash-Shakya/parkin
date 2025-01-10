@@ -32,3 +32,33 @@ body {
 .leaflet-control-container {
   @apply hidden;
 }
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hideScrollBar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hideScrollBar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.date-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  top: 0;
+  font-weight: 500;
+}
+
+.date-badge span {
+  @apply bg-primary;
+  border-radius: 50%;
+  display: flex;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}

@@ -21,6 +21,7 @@ const FormInput = ({
         id={name}
         value={value}
         autoComplete="off"
+        onWheel={(e) => e.target.blur()} // Disable number scroll increment
         {...rest}
       />
       <label
