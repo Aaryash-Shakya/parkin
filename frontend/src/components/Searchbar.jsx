@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { IoSearch } from "react-icons/io5";
 import Location from "../assets/location.svg";
 import Logo from "../assets/logo/logo.svg";
@@ -7,10 +7,11 @@ import LogoWithoutBg from "../assets/logo/logo-nobg.svg";
 const NOMINATIM_BASE_URL = "https://nominatim.openstreetmap.org/search?";
 
 const Searchbar = (props) => {
-  // eslint-disable-next-line no-unused-vars
-  const { selectPosition, setSelectPosition } = props;
+  const { setSelectPosition } = props;
   const [searchText, setSearchText] = useState("");
   const [listPlace, setListPlace] = useState([]);
+  // const [hasTyped, setHasTyped] = useState(false); // Track if the user has typed
+
   const [isFocused, setIsFocused] = useState(false);
   let params = {
     q: "",
@@ -18,29 +19,44 @@ const Searchbar = (props) => {
     addressdetails: "addressdetails",
   };
 
-  const handleClick = () => {
-    // Search
-    if (searchText !== "") {
-      params = {
-        q: searchText,
-        format: "json",
-        addressdetails: 1,
-        polygon_geojson: 0,
-      };
-    }
+  const fetchPlaces = (query) => {
+    const params = {
+      q: query,
+      format: "json",
+      addressdetails: 1,
+      polygon_geojson: 0,
+    };
     const queryString = new URLSearchParams(params).toString();
     const requestOptions = {
       method: "GET",
       redirect: "follow",
     };
+
     fetch(`${NOMINATIM_BASE_URL}${queryString}`, requestOptions)
-      .then((response) => response.text())
+      .then((response) => response.json())
       .then((result) => {
-        console.log(JSON.parse(result));
-        setListPlace(JSON.parse(result));
+        console.log(result);
+        setListPlace(result);
       })
-      .catch((err) => console.log("err: ", err));
+      .catch((err) => console.log("Error fetching places:", err));
   };
+
+  useEffect(() => {
+    if (!searchText) {
+      setListPlace([]);
+      return;
+    }
+
+    // setHasTyped(true); // Mark that user has started typing
+
+    const debounceTimer = setTimeout(() => {
+      fetchPlaces(searchText);
+    }, 500); // Delay of 500ms
+
+    return () => {
+      clearTimeout(debounceTimer);
+    }; // Cleanup
+  }, [searchText]);
 
   return (
     <div className="absolute top-2 left-0 w-full py-2 px-4 z-50">
@@ -56,6 +72,7 @@ const Searchbar = (props) => {
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
           />
+
           <div
             className={`search-icon absolute left-0  p-5 rounded-full transition-opacity duration-100 ${
               isFocused || searchText ? "opacity-0" : "opacity-100"
@@ -111,6 +128,7 @@ const Searchbar = (props) => {
               </div>
             );
           })}
+
         </div>
       </div>
     </div>

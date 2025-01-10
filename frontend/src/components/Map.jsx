@@ -3,7 +3,8 @@ import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import MyIcon from "/vite.svg";
-import MarkerComponent from "./MarkerComponent";
+import MarkerComponent from "./markers/MarkerComponent";
+import AddNewMarker from "./markers/AddNewMarkers";
 
 const searchAreaIcon = L.icon({
   iconUrl: MyIcon,
@@ -104,6 +105,7 @@ const Map = (props) => {
         />
       )}
       <ResetCenterView selectPosition={selectPosition} />
+      <AddNewMarker />
     </MapContainer>
   );
 };
