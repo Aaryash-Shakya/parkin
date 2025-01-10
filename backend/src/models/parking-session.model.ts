@@ -18,10 +18,11 @@ const parkingSessionSchema = new Schema(
 		},
 		exitTime: {
 			type: Date,
+			required: false,
 		},
 		totalCost: {
 			type: Number,
-			required: true,
+			required: false,
 		},
 		vehicleType: {
 			type: String,
