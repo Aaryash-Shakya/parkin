@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import PageHeader from "../components/PageHeader";
 
-const ParkingSpaceList = () => {
+const ParkingStatusList = () => {
   const navigate = useNavigate();
 
   const reservations = [
@@ -44,7 +44,7 @@ const ParkingSpaceList = () => {
             <div
               key={index}
               className="relative flex bg-white p-4 rounded-lg date-badge-parent justify-between items-center mb-4 gap-4 cursor-pointer "
-              onClick={() => navigate(`/owner/parking-spaces/${2}`)}
+              onClick={() => navigate(`/owner/parking-status/${4}`)}
             >
               <div className="date-badge">
                 Apr
@@ -75,4 +75,4 @@ const ParkingSpaceList = () => {
   );
 };
 
-export default ParkingSpaceList;
+export default ParkingStatusList;

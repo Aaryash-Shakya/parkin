@@ -11,6 +11,8 @@ import Setting from "./pages/Setting";
 import RegisterParkingSpace from "./pages/RegisterParkingSpace";
 import ParkingSpaceList from "./pages/ParkingSpaceList";
 import ParkingSpaceDetails from "./pages/ParkingSpaceDetails";
+import ParkingStatusList from "./pages/ParkingStatusList";
+import OwnerParkingStatus from "./pages/OwnerParkingStatus";
 
 const MyRoutes = () => {
   return (
@@ -33,6 +35,14 @@ const MyRoutes = () => {
           <Route
             path="/owner/parking-spaces/:id"
             element={<ParkingSpaceDetails />}
+          />
+          <Route
+            path="/owner/parking-status-listing/"
+            element={<ParkingStatusList />}
+          />
+          <Route
+            path="/owner/parking-status/:id"
+            element={<OwnerParkingStatus />}
           />
         </Routes>
         <BottomNavbar />
