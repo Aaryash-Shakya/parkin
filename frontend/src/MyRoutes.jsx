@@ -4,6 +4,10 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import BottomNavbar from "./components/BottomNavbar";
 import Reservation from "./pages/Reservation";
+import ReservationListing from "./pages/ReservationListing";
+import ReservationDetails from "./pages/ReservationDetails";
+import ParkingStatus from "./pages/ParkingStatus";
+import Setting from "./pages/Setting";
 
 const MyRoutes = () => {
   return (
@@ -14,6 +18,10 @@ const MyRoutes = () => {
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/reserve-parking" element={<Reservation />} />
+          <Route path="/reservations" element={<ReservationListing />} />
+          <Route path="/parking" element={<ParkingStatus />} />
+          <Route path="/reservations/:id" element={<ReservationDetails />} />
+          <Route path="/setting" element={<Setting />} />
         </Routes>
         <BottomNavbar />
       </BrowserRouter>

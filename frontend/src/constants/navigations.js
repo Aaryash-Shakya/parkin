@@ -20,17 +20,17 @@ const navigations = [
   },
   {
     index: 2,
+    name: "Reservation",
+    link: "/reservations",
+    iconActive: ReserveIconSolid,
+    icon: ReserveIconOutline,
+  },
+  {
+    index: 3,
     name: "Parking",
     link: "/parking",
     iconActive: ParkingIconSolid,
     icon: ParkingIconOutline,
-  },
-  {
-    index: 3,
-    name: "Reservation",
-    link: "/reserve-parking",
-    iconActive: ReserveIconSolid,
-    icon: ReserveIconOutline,
   },
   {
     index: 4,

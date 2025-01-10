@@ -1,8 +1,7 @@
-import { formatISODate } from "../../helpers";
-import Button from "../form/Button";
-import PageHeader from "../PageHeader";
+import PageHeader from "../components/PageHeader";
+import { formatISODate } from "../helpers";
 
-const ConfirmReservation = ({ setConfirmPage }) => {
+const ParkingStatus = () => {
   const reservation = {
     displayName: "Kathmandu Medical College and research center",
     lat: 27.708317,
@@ -15,9 +14,9 @@ const ConfirmReservation = ({ setConfirmPage }) => {
 
   return (
     <>
-      <PageHeader title="Confirm Reservation" setConfirmPage={setConfirmPage} />
+      <PageHeader title="Your Parking Status" backPath="/reservations" />
       <div className="container bg-gray-200 min-h-screen flex flex-col items-center pb-28 pt-8">
-        <img src="/confirm-icon.svg" alt="" className="w-32 mb-8" />
+        <img src="/reservation-preview.png" alt="" className="w-52 mb-8" />
         <div className="bg-white rounded-3xl overflow-hidden">
           <div className="w-full gap-4 bg-secondary px-5 py-6 ">
             <div className="text-md font-medium w-full text-lg mb-3">
@@ -60,13 +59,9 @@ const ConfirmReservation = ({ setConfirmPage }) => {
             </div>
           </div>
         </div>
-        <Button
-          title="Confirm"
-          styles="bg-primary text-white hover:bg-blue-700 transition-all duration-0 hover:duration-150 ease-in-out"
-        />
       </div>
     </>
   );
 };
 
-export default ConfirmReservation;
+export default ParkingStatus;
