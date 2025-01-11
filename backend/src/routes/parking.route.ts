@@ -8,11 +8,15 @@ router.route("/add").post(parkingController.addParking);
 
 router.route("/update/:parkingId").put(parkingController.updateParking);
 
+router.route("/list").get(parkingController.listParkings);
+
 router.route("/nearby").get(parkingController.findNearbyParking);
 
 router.route("/entry").post(parkingSessionController.recordEntry);
 
 router.route("/exit").put(parkingSessionController.recordExit);
+
+router.route("/show/:parkingId").get(parkingController.findParkingById);
 
 router
 	.route("/parked-vehicles/:parkingId")

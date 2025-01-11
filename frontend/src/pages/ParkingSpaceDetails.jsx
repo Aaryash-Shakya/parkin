@@ -1,13 +1,41 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom"; // For route parameters
+import { useNavigate, useParams } from "react-router-dom"; // For route parameters
 import AdditionalFeatures from "../components/form/AdditionalFeatures";
 import Button from "../components/form/Button";
 import FormInput from "../components/form/FormInput";
 import PageHeader from "../components/PageHeader";
+import { getParkingSpaceData } from "../api/owner.booking";
 
 const ParkingSpaceDetails = () => {
   const { id } = useParams(); // Get the parking space ID from the route
+
+  const fetchReservationData = async () => {
+    try {
+      const result = await getParkingSpaceData(id);
+      console.log("result :", result);
+
+      setFormData({
+        displayName: result.name,
+        twoWheelerHourlyRate:
+          result?.hourlyRates?.TWO_WHEELER?.ratePerHour || 0,
+        fourWheelerHourlyRate:
+          result?.hourlyRates?.FOUR_WHEELER?.ratePerHour || 0,
+        capacity: result.capacity,
+        reservedCount: result.reservedSlots || 0,
+        selectedFeatures: result.features,
+      });
+    } catch (err) {
+      console.log("err :", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchReservationData();
+  }, []);
+
   const additionalFeatures = ["CCTV", "EV Charging", "Sheltered", "Free"];
+
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     displayName: "Kathmandu Model School",
@@ -78,14 +106,18 @@ const ParkingSpaceDetails = () => {
     // Submit the form data to the backend or perform other actions
   };
 
+  const handleMapViewClick = () => {
+    navigate("/");
+    // other logic to move the marker and camera to the lat lng
+  };
+
   return (
     <>
       <PageHeader
         title={"Your Parking Space"}
         backPath="/owner/parking-spaces"
       />
-      <div className="container bg-gray-200 min-h-screen flex flex-col items-center pb-28">
-        <img src="/reservation-preview.png" alt="Reservation Preview" />
+      <div className="container bg-gray-200 min-h-screen flex flex-col items-center pb-28 pt-7">
         <form className="w-full" onSubmit={handleSubmit}>
           <FormInput
             placeholder="Your Parking Space Name"
@@ -146,6 +178,7 @@ const ParkingSpaceDetails = () => {
 
           <Button
             title="View on Map"
+            onClick={handleMapViewClick}
             type="button"
             styles="bg-primary text-white hover:bg-blue-700 transition-all duration-0 hover:duration-150 ease-in-out"
           />

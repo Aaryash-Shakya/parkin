@@ -1,23 +1,30 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import FormInput from "../components/form/FormInput";
 import Button from "../components/form/Button";
 import { Link, useNavigate } from "react-router-dom";
 import Container from "../components/Container";
 import { toast } from "react-toastify";
+import { signInUser } from "../api/auth";
+import { useUserStore } from "../store/user.store";
 
 const SignIn = () => {
   const [inputData, setInputData] = useState({
-    email: "",
+    phone: "",
     password: "",
   });
 
-  const validateUserInput = (userInput) => {
-    const { email, password } = userInput;
-    const isValidEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  const navigate = useNavigate();
 
-    if (!email.trim()) return { ok: false, err: "Email is missing" };
-    if (!isValidEmail.test(email))
-      return { ok: false, err: "Email is invalid" };
+  const { setUserData } = useUserStore();
+
+  const validateUserInput = (userInput) => {
+    const { phone, password } = userInput;
+    const isValidPhone = /^\d{10}$/;
+
+    if (!phone.trim()) return { ok: false, err: "Phone number is missing" };
+    if (!isValidPhone.test(phone))
+      return { ok: false, err: "Phone number is invalid" };
+    if (!password.trim()) return { ok: false, err: "Password is missing" };
 
     return { ok: true };
   };
@@ -28,7 +35,7 @@ const SignIn = () => {
     setInputData({ ...inputData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const { ok, err } = validateUserInput(inputData);
@@ -36,9 +43,35 @@ const SignIn = () => {
     if (err) return toast.error(err);
 
     const payload = {
-      email: inputData.email,
+      phone: inputData.phone,
       password: inputData.password,
     };
+
+    if (ok) {
+      signInUser(payload)
+        .then((responseData) => {
+          if (responseData.error) {
+            return toast.error(responseData.error);
+          }
+
+          console.log("responseData", responseData.data);
+
+          setUserData({
+            name: responseData.data.name,
+            phone: responseData.data.phone,
+            type: responseData.data.type,
+            userId: responseData.data.userId,
+            isAuthenticated: true,
+          });
+
+          toast.success(responseData.message);
+          navigate("/");
+        })
+        .catch((error) => {
+          console.error("Error during sign in:", error);
+          toast.error("Something went wrong. Please try again.");
+        });
+    }
 
     console.log("user is logging in with", payload);
   };
@@ -61,10 +94,10 @@ const SignIn = () => {
           </p>
           <form onSubmit={handleSubmit}>
             <FormInput
-              placeholder="abc@example.com"
+              placeholder="9810005566"
               type="text"
-              name="email"
-              value={inputData.email}
+              name="phone"
+              value={inputData.phone}
               onChange={handleChange}
             />
             <FormInput

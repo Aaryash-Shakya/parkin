@@ -1,8 +1,8 @@
 import client from "./client";
 
-export const createUser = async (userInfo) => {
+export const createBooking = async (payload) => {
   try {
-    const { data } = await client.post("/create-route-here", userInfo);
+    const { data } = await client.post("/parking/add", payload);
     return data;
   } catch (err) {
     const { response } = err;
@@ -12,9 +12,9 @@ export const createUser = async (userInfo) => {
   }
 };
 
-export const signInUser = async (userInfo) => {
+export const getOwnerParkingSpaces = async (userID) => {
   try {
-    const { data } = await client.post("/user/login", userInfo);
+    const { data } = await client.get(`/user/parkings/${userID}`);
     return data;
   } catch (err) {
     const { response } = err;
@@ -24,14 +24,9 @@ export const signInUser = async (userInfo) => {
   }
 };
 
-export const getIsAuth = async (token) => {
+export const getParkingSpaceData = async (parkingId) => {
   try {
-    const { data } = await client.get("/isAuth-route-here", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: "application/json",
-      },
-    });
+    const { data } = await client.get(`/parking/show/${parkingId}`);
     return data;
   } catch (err) {
     const { response } = err;

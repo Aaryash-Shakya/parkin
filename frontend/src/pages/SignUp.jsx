@@ -3,13 +3,25 @@ import Button from "../components/form/Button";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import Container from "../components/Container";
+import FormSelect from "../components/form/FormSelect";
 
 const SignUp = () => {
   const [inputData, setInputData] = useState({
     username: "",
     email: "",
-    password: "",
+    type: "USER",
   });
+
+  const userTypeOptions = [
+    {
+      id: "USER",
+      displayName: "Rider",
+    },
+    {
+      id: "OPERATOR",
+      displayName: "Operator",
+    },
+  ];
 
   // console.log(inputData);
 
@@ -27,6 +39,7 @@ const SignUp = () => {
       name: inputData.username.toLowerCase(),
       email: inputData.email,
       password: inputData.password,
+      type: inputData.type,
     };
 
     console.log("signing up the user", payload);
@@ -67,6 +80,13 @@ const SignUp = () => {
               value={inputData.email}
               onChange={handleChange}
             />
+            <FormSelect
+              name="type"
+              label="Sign up as"
+              value={inputData.type}
+              onChange={handleChange}
+              options={userTypeOptions}
+            />
             <FormInput
               placeholder="************"
               type="password"
@@ -80,7 +100,7 @@ const SignUp = () => {
               styles="bg-primary text-white hover:bg-blue-700 transition-all duration-0 hover:duration-150 ease-in-out"
             />
 
-            <span className="text-sm text-gray-400 flex gap-2 mt-8 text-center items-center justify-center">
+            <span className="text-sm text-gray-400 flex gap-2 mt-8 pb-20 text-center items-center justify-center">
               <p>Already have an account?</p>
               <Link
                 to="/sign-in"

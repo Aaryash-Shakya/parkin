@@ -9,6 +9,7 @@ async function addParking(req: any, res: any, next: any) {
 		lat,
 		long,
 		capacity,
+		reservedSlots,
 		maxHeightInMeter,
 		features,
 		hourlyRates,
@@ -33,6 +34,7 @@ async function addParking(req: any, res: any, next: any) {
 				coordinates: [parseFloat(long), parseFloat(lat)],
 			};
 		if (capacity) parkingObj.capacity = parseInt(capacity);
+		if (reservedSlots) parkingObj.reservedSlots = parseInt(reservedSlots);
 		if (maxHeightInMeter)
 			parkingObj.maxHeightInMeter = parseFloat(maxHeightInMeter);
 		if (features) parkingObj.features = features;
@@ -54,6 +56,7 @@ async function updateParking(req: any, res: any, next: any) {
 		lat,
 		long,
 		capacity,
+		reservedSlots,
 		maxHeightInMeter,
 		features,
 		hourlyRates,
@@ -79,6 +82,7 @@ async function updateParking(req: any, res: any, next: any) {
 				coordinates: [parseFloat(long), parseFloat(lat)],
 			};
 		if (capacity) parkingObj.capacity = parseInt(capacity);
+		if (reservedSlots) parkingObj.reservedSlots = parseInt(reservedSlots);
 		if (maxHeightInMeter)
 			parkingObj.maxHeightInMeter = parseFloat(maxHeightInMeter);
 		if (features) parkingObj.features = features;
@@ -164,4 +168,85 @@ async function findNearbyParking(req: any, res: any, next: any) {
 	}
 }
 
-export default { addParking, updateParking, findNearbyParking };
+async function listParkings(req: any, res: any, next: any) {
+	logger.log.info({
+		message: `Inside parking controller to list parkings`,
+		reqId: req.id,
+		ip: req.headers["x-forwarded-for"] || req.socket.remoteAddress,
+		api: "/parking/parkings",
+		method: "GET",
+	});
+	try {
+		const parkingObj = await parkingModel.find();
+		res.json(parkingObj);
+	} catch (err) {
+		logger.log.error({ reqId: req.id, message: err });
+		return next(err);
+	}
+}
+
+async function listParkingsForUser(req: any, res: any, next: any) {
+	const { userId } = req.params;
+	logger.log.info({
+		message: `Inside parking controller to list parkings for user ${userId}`,
+		reqId: req.id,
+		ip: req.headers["x-forwarded-for"] || req.socket.remoteAddress,
+		api: "/parking/parkings/:userId",
+		method: "GET",
+	});
+	try {
+		const parkingObj = await parkingModel.find({ userId });
+		res.json(parkingObj);
+	} catch (err) {
+		logger.log.error({ reqId: req.id, message: err });
+		return next(err);
+	}
+}
+
+async function findParkingById(req: any, res: any, next: any) {
+	const { parkingId } = req.params;
+	logger.log.info({
+		message: `Inside parking controller to find parking by id ${parkingId}`,
+		reqId: req.id,
+		ip: req.headers["x-forwarded-for"] || req.socket.remoteAddress,
+		api: "/parking/show/:parkingId",
+		method: "GET",
+	});
+	try {
+		const parkingObj = await parkingModel.findById(parkingId);
+		if (!parkingObj) {
+			return res.status(404).json({ error: "Parking not found" });
+		}
+		const parkedVehicles = await parkingSessionModel.find({
+			parkingId: parkingObj._id,
+			exitTime: null,
+		});
+		let usedSlots = 0;
+		if (parkingObj.reservedSlots) {
+			usedSlots += parkingObj.reservedSlots;
+		}
+		parkedVehicles.forEach((parkedVehicle) => {
+			if (parkedVehicle.vehicleType === "TWO_WHEELER") {
+				usedSlots += 1;
+			} else if (parkedVehicle.vehicleType === "FOUR_WHEELER") {
+				usedSlots += 2;
+			}
+		});
+		res.json({
+			...parkingObj.toObject(),
+			availableSlots: parkingObj.capacity - usedSlots,
+		});
+	} catch (err) {
+		logger.log.error({ reqId: req.id, message: err });
+		return next(err);
+	}
+}
+
+export default {
+	addParking,
+	updateParking,
+	findNearbyParking,
+	listParkings,
+	listParkingsForUser,
+	findParkingById,
+};
