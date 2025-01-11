@@ -45,15 +45,22 @@ const ParkingEntryRegistrationModal = ({ closeModal, showLoading }) => {
     return true;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (validateDates()) {
-      // Proceed with form submission
-      console.log({
-        numberPlate,
-        arrivalDateTime,
-        vehicleType,
-      });
+  const handleSubmit = async () => {
+    const formData = new FormData();
+    formData.append("vehicleNumber", numberPlate);
+    formData.append("vehicleType", vehicleType);
+
+    try {
+      const response = await recordEntry(formData);
+      if (response.error) {
+        setError(response.error);
+        toast.show("error");
+      } else {
+        setSuccess("Exit recorded successfully!");
+      }
+    } catch (err) {
+      setError("An unexpected error occurred.");
+    } finally {
       setArrivalDateTime("");
       setNumberPlate("");
       setVehicleType(vehicleTypeOptions[0].id);
@@ -83,14 +90,6 @@ const ParkingEntryRegistrationModal = ({ closeModal, showLoading }) => {
             setNumberPlate(e.target.value);
           }}
           style=""
-        />
-        <CustomDateTimePicker
-          onChange={(value) => {
-            setArrivalDateTime(value);
-            validateDates();
-          }}
-          value={arrivalDateTime}
-          label="Arrival Date and Time"
         />
 
         <FormSelect

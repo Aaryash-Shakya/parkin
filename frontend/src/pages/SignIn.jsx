@@ -60,7 +60,7 @@ const SignIn = () => {
             name: responseData.data.name,
             phone: responseData.data.phone,
             type: responseData.data.type,
-            userId: responseData.data.userId,
+            userId: responseData.data._id,
             isAuthenticated: true,
           });
 
