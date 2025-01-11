@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { IoSearch } from "react-icons/io5";
 import Location from "../assets/location.svg";
 import LogoWithoutBg from "../assets/logo/logo-nobg.svg";
+import { searchNearByParking } from "../api/parking";
+import { useParkingStore } from "../store/parking.store";
 
 const NOMINATIM_BASE_URL = "https://nominatim.openstreetmap.org/search?";
 
@@ -11,6 +13,9 @@ const Searchbar = (props) => {
   const [searchText, setSearchText] = useState("");
   const [listPlace, setListPlace] = useState([]);
   const [isFocused, setIsFocused] = useState(false);
+
+  const { addParking } = useParkingStore();
+
   let params = {
     q: "",
     format: "json",
@@ -44,7 +49,6 @@ const Searchbar = (props) => {
       setListPlace([]);
       return;
     }
-
     // setHasTyped(true); // Mark that user has started typing
 
     const debounceTimer = setTimeout(() => {
@@ -54,8 +58,22 @@ const Searchbar = (props) => {
     return () => {
       clearTimeout(debounceTimer);
     }; // Cleanup
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchText]);
+
+  const handleApiCall = async () => {
+    console.log("selectPosition", selectPosition);
+    await searchNearByParking(selectPosition).then((responseData) => {
+      if (responseData.error) {
+        console.log(responseData.error);
+      } else {
+        responseData.forEach((parkingObject) => {
+          addParking(parkingObject);
+        });
+      }
+    });
+  };
+
   return (
     <div className="absolute top-2 left-0 w-full py-2 px-4 z-50">
       <div className="flex flex-col gap-2 w-full">
@@ -115,6 +133,7 @@ const Searchbar = (props) => {
                     });
                     setSearchText(place?.display_name);
                     setListPlace([]);
+                    handleApiCall();
                   }}
                   className="flex items-center flex-wrap overflow-hidden"
                 >
