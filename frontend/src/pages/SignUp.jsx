@@ -74,9 +74,9 @@ const SignUp = () => {
               onChange={handleChange}
             />
             <FormInput
-              placeholder="abc@example.com"
-              type="email"
-              name="email"
+              placeholder="9843133216"
+              type="number"
+              name="phone"
               value={inputData.email}
               onChange={handleChange}
             />
@@ -100,7 +100,7 @@ const SignUp = () => {
               styles="bg-primary text-white hover:bg-blue-700 transition-all duration-0 hover:duration-150 ease-in-out"
             />
 
-            <span className="text-sm text-gray-400 flex gap-2 mt-8 pb-20 text-center items-center justify-center">
+            <span className="text-sm text-gray-400 flex gap-2 mt-8 text-center items-center justify-center">
               <p>Already have an account?</p>
               <Link
                 to="/sign-in"

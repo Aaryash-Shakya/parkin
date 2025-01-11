@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import PageHeader from "../components/PageHeader";
+import { useUserStore } from "../store/user.store";
+import LoginInWarning from "../components/LoginInWarning";
 
 const ReservationListing = () => {
   const navigate = useNavigate();
@@ -33,6 +35,12 @@ const ReservationListing = () => {
       vehicleType: "2 Wheeler",
     },
   ];
+
+  const { userData } = useUserStore();
+
+  if (!userData?.isAuthenticated) {
+    return <LoginInWarning />;
+  }
   return (
     <>
       <PageHeader title="Your Reservations" />
