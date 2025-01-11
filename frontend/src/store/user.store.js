@@ -3,7 +3,7 @@ import { create } from "zustand";
 export const useUserStore = create((set, get) => ({
     userData: {
         name: "",
-        email: "",
+        phone: "",
         type: "",
         userId: "",
         isAuthenticated: false,
@@ -17,7 +17,7 @@ export const useUserStore = create((set, get) => ({
         set(() => ({
             userData: {
                 name: "",
-                email: "",
+                phone: "",
                 type: "",
                 userId: "",
                 isAuthenticated: false,
