@@ -1,10 +1,13 @@
-/* eslint-disable no-unused-vars */
 import { useNavigate } from "react-router-dom";
 import { useMarkerPopUpStore } from "../../store/useMarkerPopUp.store";
 import Button from "../form/Button";
 import RiderMarkerPopup from "./RiderMarkerPopup";
+import { useUserStore } from "../../store/user.store";
 
 const MarkerPopUp = () => {
+  const { userData } = useUserStore();
+  console.log("userData :", userData);
+
   const {
     clearContent,
     markerContent,
@@ -40,32 +43,34 @@ const MarkerPopUp = () => {
           X
         </button>
 
-        {/* <div>
-          <h3 className="text-xl font-semibold text-gray-800 mb-3">
-            Add Your Parking Location
-          </h3>
+        {userData.type === "OPERATOR" ? (
+          <div>
+            <h3 className="text-xl font-semibold text-gray-800 mb-3">
+              Add Your Parking Location
+            </h3>
 
-          <div className="flex justify-between mb-2">
-            <span className="text-gray-600">Latitude</span>
-            <span className="font-medium">
-              {parseFloat(markerContent?.latitude?.toFixed(4))}
-            </span>
+            <div className="flex justify-between mb-2">
+              <span className="text-gray-600">Latitude</span>
+              <span className="font-medium">
+                {parseFloat(markerContent?.latitude?.toFixed(4))}
+              </span>
+            </div>
+            <div className="flex justify-between mb-2">
+              <span className="text-gray-600">Longitude</span>
+              <span className="font-medium">
+                {parseFloat(markerContent?.longitude?.toFixed(4))}
+              </span>
+            </div>
+
+            <Button
+              title="Create Parking Space"
+              onClick={handleCreationNavigation}
+              styles="bg-primary text-white hover:bg-blue-700 transition-all duration-0 hover:duration-150 ease-in-out"
+            />
           </div>
-          <div className="flex justify-between mb-2">
-            <span className="text-gray-600">Longitude</span>
-            <span className="font-medium">
-              {parseFloat(markerContent?.longitude?.toFixed(4))}
-            </span>
-          </div>
-
-          <Button
-            title="Create Parking Space"
-            onClick={handleCreationNavigation}
-            styles="bg-primary text-white hover:bg-blue-700 transition-all duration-0 hover:duration-150 ease-in-out"
-          />
-        </div> */}
-
-        <RiderMarkerPopup setShowContent={setShowContent} />
+        ) : (
+          <RiderMarkerPopup setShowContent={setShowContent} />
+        )}
       </div>
     </div>
   );

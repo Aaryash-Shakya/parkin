@@ -9,7 +9,7 @@ const Reservation = () => {
       {confirmPage ? (
         <ConfirmReservation setConfirmPage={setConfirmPage} />
       ) : (
-        <ReserveParking />
+        <ReserveParking setConfirmPage={setConfirmPage} />
       )}
     </>
   );

@@ -35,9 +35,9 @@ const ParkingStatusList = () => {
   ];
   return (
     <>
-      <PageHeader title="Your Parking Locations" />
+      <PageHeader title="Your Parking Status" />
       <div className="container bg-gray-200 min-h-screen flex flex-col items-center pb-28">
-        <img src="/reservation-list.png" alt="" />
+        <img src="/reservation-preview.png" alt="" />
 
         <div>
           {reservations.map((reservation, index) => (
@@ -47,8 +47,8 @@ const ParkingStatusList = () => {
               onClick={() => navigate(`/owner/parking-status/${4}`)}
             >
               <div className="date-badge">
-                Apr
-                <span>22</span>
+                Jan
+                <span>12</span>
               </div>
               <div>
                 <div>
