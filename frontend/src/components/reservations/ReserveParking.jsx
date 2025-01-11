@@ -58,6 +58,8 @@ const ReserveParking = ({ setConfirmPage }) => {
         numberPlate,
         vehicleType,
       });
+    } else {
+      setError("Invalid or empty data, please fill the form");
     }
   };
 
