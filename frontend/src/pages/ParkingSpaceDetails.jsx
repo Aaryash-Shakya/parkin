@@ -4,9 +4,35 @@ import AdditionalFeatures from "../components/form/AdditionalFeatures";
 import Button from "../components/form/Button";
 import FormInput from "../components/form/FormInput";
 import PageHeader from "../components/PageHeader";
+import { getParkingSpaceData } from "../api/owner.booking";
 
 const ParkingSpaceDetails = () => {
   const { id } = useParams(); // Get the parking space ID from the route
+
+  const fetchReservationData = async () => {
+    try {
+      const result = await getParkingSpaceData(id);
+      console.log("result :", result);
+
+      setFormData({
+        displayName: result.name,
+        twoWheelerHourlyRate:
+          result?.hourlyRates?.TWO_WHEELER?.ratePerHour || 0,
+        fourWheelerHourlyRate:
+          result?.hourlyRates?.FOUR_WHEELER?.ratePerHour || 0,
+        capacity: result.capacity,
+        reservedCount: result.reservedSlots || 0,
+        selectedFeatures: result.features,
+      });
+    } catch (err) {
+      console.log("err :", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchReservationData();
+  }, []);
+
   const additionalFeatures = ["CCTV", "EV Charging", "Sheltered", "Free"];
 
   const navigate = useNavigate();
