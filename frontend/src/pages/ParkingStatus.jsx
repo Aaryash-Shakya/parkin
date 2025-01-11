@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 import Button from "../components/form/Button";
 import PageHeader from "../components/PageHeader";
 import { formatISODate } from "../helpers";
+import { useUserStore } from "../store/user.store";
+import LoginInWarning from "../components/LoginInWarning";
 
 const ParkingStatus = () => {
   const navigate = useNavigate();
@@ -20,6 +22,12 @@ const ParkingStatus = () => {
     toDateTime: "2025-01-10T06:27:55.110Z",
     vehicleType: "2 Wheeler",
   };
+
+  const { userData } = useUserStore();
+
+  if (!userData?.isAuthenticated) {
+    return <LoginInWarning />;
+  }
 
   return (
     <>

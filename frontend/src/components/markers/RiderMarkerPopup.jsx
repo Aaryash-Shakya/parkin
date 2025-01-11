@@ -1,46 +1,83 @@
+import { useEffect, useState } from "react";
+import { useMarkerPopUpStore } from "../../store/useMarkerPopUp.store";
+import { toast } from "react-toastify";
+import { useUserStore } from "../../store/user.store";
 import Button from "../form/Button";
 import { useNavigate } from "react-router-dom";
+import { getParkingDetail } from "../../api/parking";
 
 const RiderMarkerPopup = ({ setShowContent }) => {
+  const { userData } = useUserStore();
   const navigate = useNavigate();
   const handleReservationNavigation = () => {
     setShowContent(false);
-    return navigate("/reserve-parking");
+    if (!userData?.isAuthenticated) {
+      navigate("/sign-in");
+      toast.warn("Please login in to access full features.");
+      return;
+    }
+    navigate("/reserve-parking");
   };
 
-  const additionalFeatures = ["CCTV", "EV Charging"];
+  const { markerContent } = useMarkerPopUpStore();
+
+  const [additionalFeatures, setAdditionalFeatures] = useState([]);
+  const [markerData, setMarkerData] = useState();
+
+  useEffect(() => {
+    const apiCall = async () => {
+      console.log(markerContent);
+      if (!markerContent.parkingId) return;
+      await getParkingDetail(markerContent.parkingId).then((data) => {
+        console.log(data);
+        setAdditionalFeatures(data?.features);
+        setMarkerData(data);
+      });
+    };
+    apiCall();
+  }, [markerContent]);
+
+  if (!markerData) return;
 
   return (
     <div>
       <div className="flex gap-4 mb-2">
         <div className="flex gap-1 font-semibold text-green-600 items-center">
           <img src="/bike-icon-purple.svg" className="w-5 green-img" alt="" />
-          10
-        </div>
-        <div className="flex gap-1 font-semibold text-yellow-600 items-center">
-          <img src="/bike-icon-purple.svg" className="w-5 yellow-img" alt="" />
-          10
+          {markerData.availableSlots}
         </div>
         <div className="flex gap-1 font-semibold text-red-600 items-center">
           <img src="/bike-icon-purple.svg" className="w-5 red-img" alt="" />
-          10
+          {markerData.capacity - markerData.availableSlots}
         </div>
       </div>
       <h3 className="text-xl font-semibold text-gray-800 mb-3">
-        Kathmandu Parking Complex
+        {markerData?.name}
       </h3>
 
       <div className="flex justify-between mb-2">
         <span className="text-gray-600">Latitude</span>
-        <span className="font-medium">32323</span>
+        <span className="font-medium">
+          {markerData?.location?.coordinates[0]}
+        </span>
       </div>
       <div className="flex justify-between mb-2">
         <span className="text-gray-600">Longitude</span>
-        <span className="font-medium">323</span>
+        <span className="font-medium">
+          {markerData?.location?.coordinates[1]}
+        </span>
       </div>
       <div className="flex justify-between mb-2">
-        <span className="text-gray-600">Price/hr</span>
-        <span className="font-medium">Rs. 40</span>
+        <span className="text-gray-600">2 wheeler Price/hr</span>
+        <span className="font-medium">
+          Rs. {markerData?.hourlyRates.TWO_WHEELER.ratePerHour}
+        </span>
+      </div>
+      <div className="flex justify-between mb-2">
+        <span className="text-gray-600">4 wheeler Price/hr</span>
+        <span className="font-medium">
+          Rs. {markerData.hourlyRates.FOUR_WHEELER.ratePerHour}
+        </span>
       </div>
 
       <div className="flex gap-2 mt-4">

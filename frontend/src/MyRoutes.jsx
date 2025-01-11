@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
@@ -17,6 +17,8 @@ import MarkerPopUp from "./components/markers/MarkerPopUp";
 import { ComputerVision } from "./components/ComputerVision";
 
 const MyRoutes = () => {
+  const location = useLocation();
+  const noNavbarRoutes = ["/sign-in", "/sign-up"];
   return (
     <>
       <BrowserRouter>
@@ -53,8 +55,7 @@ const MyRoutes = () => {
         </Routes>
         <MarkerPopUp />
 
-        <BottomNavbar />
-      </BrowserRouter>
+      {!noNavbarRoutes.includes(location.pathname) && <BottomNavbar />}
     </>
   );
 };

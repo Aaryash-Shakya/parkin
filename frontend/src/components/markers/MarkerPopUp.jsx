@@ -6,7 +6,6 @@ import { useUserStore } from "../../store/user.store";
 
 const MarkerPopUp = () => {
   const { userData } = useUserStore();
-  console.log("userData :", userData);
 
   const {
     clearContent,
@@ -52,13 +51,13 @@ const MarkerPopUp = () => {
             <div className="flex justify-between mb-2">
               <span className="text-gray-600">Latitude</span>
               <span className="font-medium">
-                {parseFloat(markerContent?.latitude?.toFixed(4))}
+                {parseFloat(markerContent?.latitude).toFixed(4)}
               </span>
             </div>
             <div className="flex justify-between mb-2">
               <span className="text-gray-600">Longitude</span>
               <span className="font-medium">
-                {parseFloat(markerContent?.longitude?.toFixed(4))}
+                {parseFloat(markerContent?.longitude).toFixed(4)}
               </span>
             </div>
 

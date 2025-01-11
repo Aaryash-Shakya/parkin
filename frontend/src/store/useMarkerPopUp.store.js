@@ -9,9 +9,7 @@ export const useMarkerPopUpStore = create((set) => ({
   clearContent: () => set({ showContent: false }),
 
   markerContent: {
-    latitude: null,
-    longitude: null,
-    description: null,
+    parkingId: null,
   },
   setMarkerContent: (markerContent) => {
     console.log("Marker content set:", markerContent);
@@ -20,9 +18,7 @@ export const useMarkerPopUpStore = create((set) => ({
   clearMarkerContent: () =>
     set({
       markerContent: {
-        latitude: null,
-        longitude: null,
-        description: null,
+        parkingId: null
       },
     }),
 }));

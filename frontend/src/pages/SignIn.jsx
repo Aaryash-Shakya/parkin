@@ -60,7 +60,7 @@ const SignIn = () => {
             name: responseData.data.name,
             phone: responseData.data.phone,
             type: responseData.data.type,
-            userId: responseData.data.userId,
+            userId: responseData.data._id,
             isAuthenticated: true,
           });
 
@@ -120,6 +120,15 @@ const SignIn = () => {
                 className=" hover:text-red-600 transition-all duration-0 hover:duration-50 ease-in-out hover:underline font-semibold text-primary"
               >
                 Create Account
+              </Link>
+            </span>
+
+            <span className="text-sm text-gray-400 flex gap-2 text-center items-center justify-center">
+              <Link
+                to="/"
+                className="underline text-center margin-auto mt-3 hover:text-red-600 transition-all duration-0 hover:duration-50 ease-in-out hover:underline font-semibold text-primary"
+              >
+                To Home
               </Link>
             </span>
           </form>
