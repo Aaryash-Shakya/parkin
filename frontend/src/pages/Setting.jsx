@@ -1,23 +1,28 @@
-import React, { useState } from "react";
 import PageHeader from "../components/PageHeader";
 import { FaUser } from "react-icons/fa";
 import settingTabs from "../constants/settingTabs";
 import Button from "../components/form/Button";
+import LoginInWarning from "../components/LoginInWarning";
+import { useUserStore } from "../store/user.store";
 
 const Setting = () => {
-  const [user, setUser] = useState(true);
+  const { userData } = useUserStore();
+
+  if (!userData?.isAuthenticated) {
+    return <LoginInWarning />;
+  }
   return (
     <>
       <PageHeader title="ParkIn Settings" />
       <>
-        {user ? (
+        {userData?.isAuthenticated ? (
           <div className="flex gap-4 bg-gray-200 items-center px-5 py-4">
             <div className="flex items-center justify-center bg-white w-14 h-14 aspect-square rounded-full">
               <FaUser className="text-gray-500 text-xl" />
             </div>
             <div className="flex flex-col">
-              <p className="text-md text-gray-700 font-semibold">Leon Lama</p>
-              <p className="text-sm text-gray-500">leon.lama2002@gmail.com</p>
+              <p className="text-md text-gray-700 font-semibold">username</p>
+              <p className="text-sm text-gray-500">99843133216</p>
             </div>
           </div>
         ) : (
@@ -32,7 +37,7 @@ const Setting = () => {
       <div className="flex flex-col">
         {settingTabs.map((tab, index) => {
           if (
-            user ||
+            userData?.isAuthenticated ||
             index === 3 ||
             index === 4 ||
             index === settingTabs.length - 2

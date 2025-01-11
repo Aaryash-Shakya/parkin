@@ -1,14 +1,22 @@
 import { useEffect, useState } from "react";
 import { useMarkerPopUpStore } from "../../store/useMarkerPopUp.store";
+import { toast } from "react-toastify";
+import { useUserStore } from "../../store/user.store";
 import Button from "../form/Button";
 import { useNavigate } from "react-router-dom";
 import { getParkingDetail } from "../../api/parking";
 
 const RiderMarkerPopup = ({ setShowContent }) => {
+  const { userData } = useUserStore();
   const navigate = useNavigate();
   const handleReservationNavigation = () => {
     setShowContent(false);
-    return navigate("/reserve-parking");
+    if (!userData?.isAuthenticated) {
+      navigate("/sign-in");
+      toast.warn("Please login in to access full features.");
+      return;
+    }
+    navigate("/reserve-parking");
   };
 
   const { markerContent } = useMarkerPopUpStore();

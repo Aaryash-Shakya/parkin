@@ -21,6 +21,6 @@ export const useUserStore = create((set, get) => ({
         type: "",
         userId: "",
         isAuthenticated: false,
-    }
-}))
+      },
+    })),
 }));
