@@ -5,7 +5,7 @@ export const useUserStore = create((set, get) => ({
     name: "",
     email: "",
     type: "OPERATOR",
-    userId: "",
+    userId: "677fcbc30ee7234c12752337",
     isAuthenticated: false,
   },
   setUserData: (userData) =>
