@@ -164,4 +164,45 @@ async function findNearbyParking(req: any, res: any, next: any) {
 	}
 }
 
-export default { addParking, updateParking, findNearbyParking };
+async function listParkings(req: any, res: any, next: any) {
+	logger.log.info({
+		message: `Inside parking controller to list parkings`,
+		reqId: req.id,
+		ip: req.headers["x-forwarded-for"] || req.socket.remoteAddress,
+		api: "/parking/parkings",
+		method: "GET",
+	});
+	try {
+		const parkingObj = await parkingModel.find();
+		res.json(parkingObj);
+	} catch (err) {
+		logger.log.error({ reqId: req.id, message: err });
+		return next(err);
+	}
+}
+
+async function listParkingsForUser(req: any, res: any, next: any) {
+	const { userId } = req.params;
+	logger.log.info({
+		message: `Inside parking controller to list parkings for user ${userId}`,
+		reqId: req.id,
+		ip: req.headers["x-forwarded-for"] || req.socket.remoteAddress,
+		api: "/parking/parkings/:userId",
+		method: "GET",
+	});
+	try {
+		const parkingObj = await parkingModel.find({ userId });
+		res.json(parkingObj);
+	} catch (err) {
+		logger.log.error({ reqId: req.id, message: err });
+		return next(err);
+	}
+}
+
+export default {
+	addParking,
+	updateParking,
+	findNearbyParking,
+	listParkings,
+	listParkingsForUser,
+};
