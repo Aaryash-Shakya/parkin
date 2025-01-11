@@ -10,33 +10,51 @@ export const useMarkerStore = create((set) => ({
         lng: null,
     },
     startPosition: {
-        lat: null,
-        lng: null,
+        lat: 27.698865,
+        lng: 85.297047,
     },
     endPosition: {
         lat: null,
         lng: null,
     },
+    triggerSearch: false,
+
+    // Set the new marker
     setNewMarker: (newMarker) => {
         console.log("New marker set:", newMarker);
-        set({ newMarker: { ...newMarker } })
+        set({ newMarker: { lat: newMarker.lat, lng: newMarker.lng } });
     },
+
+    // Set the search marker
     searchPointMarker: (searchMarker) => {
         console.log("Search marker set:", searchMarker);
-        set({ newMarker: { ...searchMarker } })
+        set({ searchMarker: { lat: searchMarker.lat, lng: searchMarker.lng } });
     },
+
+    // Set start position
     setStartPosition: (startPosition) => {
         console.log("Start position set:", startPosition);
-        set({ newMarker: { ...startPosition } })
+        set({ startPosition: { lat: startPosition.lat, lng: startPosition.lng } });
     },
+
+    // Set end position
     setEndPosition: (endPosition) => {
         console.log("End position set:", endPosition);
-        set({ newMarker: { ...endPosition } })
+        set({ endPosition: { lat: endPosition.lat, lng: endPosition.lng } });
     },
-    clearMarker: () => set({
-        newMarker: { lat: null, lng: null },
-        searchMarker: { lat: null, lng: null },
-        startPosition: { lat: null, lng: null },
-        endPosition: { lat: null, lng: null }
-    }),
-}))
+
+    // Clear all marker states
+    clearMarker: () =>
+        set({
+            newMarker: { lat: null, lng: null },
+            searchMarker: { lat: null, lng: null },
+            startPosition: { lat: null, lng: null },
+            endPosition: { lat: null, lng: null },
+        }),
+
+    // Toggle search state
+    toggleSearch: () =>
+        set((state) => ({
+            triggerSearch: !state.triggerSearch,
+        })),
+}));

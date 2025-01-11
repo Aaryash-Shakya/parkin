@@ -5,6 +5,7 @@ import { useUserStore } from "../../store/user.store";
 import Button from "../form/Button";
 import { useNavigate } from "react-router-dom";
 import { getParkingDetail } from "../../api/parking";
+import { useMarkerStore } from "../../store/useMarker.store";
 
 const RiderMarkerPopup = ({ setShowContent }) => {
   const { userData } = useUserStore();
@@ -20,6 +21,10 @@ const RiderMarkerPopup = ({ setShowContent }) => {
   };
 
   const { markerContent } = useMarkerPopUpStore();
+
+  const { setEndPosition } = useMarkerPopUpStore();
+
+  const { toggleSearch } = useMarkerStore();
 
   const [additionalFeatures, setAdditionalFeatures] = useState([]);
   const [markerData, setMarkerData] = useState();
@@ -94,7 +99,14 @@ const RiderMarkerPopup = ({ setShowContent }) => {
       <div className="flex gap-4">
         <Button
           title="Directions"
-          onClick={() => {}}
+          onClick={() => {
+            // console.log("I am here")
+            toggleSearch();
+            setEndPosition({
+              lat: markerData?.location?.coordinates[0],
+              long: markerData?.location?.coordinates[1],
+            });
+          }}
           styles="text-md px-2 bg-primary text-white transition-all duration-0 hover:duration-150 ease-in-out"
         />
         <Button
