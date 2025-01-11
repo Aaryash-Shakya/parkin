@@ -73,8 +73,6 @@ const ReserveParking = ({ setConfirmPage }) => {
 
           console.log("responseData", responseData.data);
 
-          
-
           toast.success(responseData.message);
           navigate("/");
         })
