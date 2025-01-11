@@ -87,9 +87,7 @@ const Map = (props) => {
           description={marker.description}
           onClick={() => {
             setMarkerContent({
-              latitude: marker.latitude,
-              longitude: marker.longitude,
-              description: "This is a custom marker!",
+              parkingId: marker.parkingId,
             });
             toggleContent();
           }}

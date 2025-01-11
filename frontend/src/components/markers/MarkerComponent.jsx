@@ -1,11 +1,8 @@
 import { Marker, Popup } from "react-leaflet";
 import StatusBadge from "../StatusBadge";
-import { useNavigate } from "react-router-dom";
 
 const MarkerComponent = (props) => {
-  const navigate = useNavigate();
-  const { latitude, longitude, description, icon, onClick, status, name } =
-    props;
+  const { latitude, longitude, icon, onClick, status } = props;
   return (
     <Marker
       position={[latitude, longitude]}
