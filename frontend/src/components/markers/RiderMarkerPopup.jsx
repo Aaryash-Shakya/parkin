@@ -1,11 +1,19 @@
+import { toast } from "react-toastify";
+import { useUserStore } from "../../store/user.store";
 import Button from "../form/Button";
 import { useNavigate } from "react-router-dom";
 
 const RiderMarkerPopup = ({ setShowContent }) => {
+  const { userData } = useUserStore();
   const navigate = useNavigate();
   const handleReservationNavigation = () => {
     setShowContent(false);
-    return navigate("/reserve-parking");
+    if (!userData?.isAuthenticated) {
+      navigate("/sign-in");
+      toast.warn("Please login in to access full features.");
+      return;
+    }
+    navigate("/reserve-parking");
   };
 
   const additionalFeatures = ["CCTV", "EV Charging"];
