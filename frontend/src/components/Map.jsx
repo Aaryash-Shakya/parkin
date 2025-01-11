@@ -11,6 +11,7 @@ import { useMarkerStore } from "../store/useMarker.store";
 import { useMarkerPopUpStore } from "../store/useMarkerPopUp.store";
 import { useParkingStore } from "../store/parking.store";
 import { useUserStore } from "../store/user.store";
+import { listAllParking } from "../api/parking";
 
 const searchAreaIcon = L.icon({
   iconUrl: CurrentIcon, // current location icon
@@ -55,6 +56,7 @@ const Map = (props) => {
 
   const { parkings } = useParkingStore();
   const { userData } = useUserStore();
+  const { triggerSearch } = useMarkerStore();
 
   console.log(parkings);
 
@@ -66,6 +68,15 @@ const Map = (props) => {
     status: parking.status,
     description: parking.description,
   }));
+
+  useEffect(() => {
+    const apiCall = async () => {
+      await listAllParking().then((data) => {
+        console.log(data);
+      });
+    };
+    apiCall();
+  }, []);
 
   return (
     <MapContainer
@@ -125,7 +136,9 @@ const Map = (props) => {
       )}
       <ResetCenterView selectPosition={selectPosition} />
       {userData.type === "OPERATOR" && <AddNewMarker />}
-      <RoutingComponent from={startPosition} to={endPosition} />
+      {triggerSearch && (
+        <RoutingComponent from={startPosition} to={endPosition} />
+      )}
     </MapContainer>
   );
 };
