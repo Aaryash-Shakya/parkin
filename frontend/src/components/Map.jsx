@@ -9,6 +9,8 @@ import AddNewMarker from "./markers/AddNewMarkers";
 import RoutingComponent from "./markers/RoutingComponent";
 import { useMarkerStore } from "../store/useMarker.store";
 import { useMarkerPopUpStore } from "../store/useMarkerPopUp.store";
+import { useParkingStore } from "../store/parking.store";
+import { useUserStore } from "../store/user.store";
 
 const searchAreaIcon = L.icon({
   iconUrl: CurrentIcon, // current location icon
@@ -44,38 +46,6 @@ function ResetCenterView(props) {
   return null;
 }
 
-const markersData = [
-  {
-    name: "Sagarmatha Parking Space",
-    latitude: 27.688418, //
-    longitude: 85.301502,
-    status: "available",
-    description: "Marker 1",
-  },
-  {
-    name: "Everest Parking Space ",
-    latitude: 27.688331,
-    longitude: 85.302393,
-    status: "full",
-    description: "Marker 2",
-  },
-  {
-    name: "Kathmandu Parking Space ",
-    latitude: 27.688329356193083,
-    longitude: 85.30236389186568,
-    status: "full",
-    description: "Marker 3",
-  },
-  {
-    name: "Shandar Momo Parking ",
-    latitude: 27.688329356193076,
-    // eslint-disable-next-line no-loss-of-precision
-    longitude: 85.30236389186563,
-    status: "Full",
-    description: "Marker 3",
-  },
-];
-
 const Map = (props) => {
   const { selectPosition } = props; // markersData is the JSON array of marker data
   const locationSelection = [selectPosition?.lat, selectPosition?.lon];
@@ -83,7 +53,19 @@ const Map = (props) => {
   const { startPosition, endPosition } = useMarkerStore();
   const { setMarkerContent, toggleContent } = useMarkerPopUpStore();
 
-  
+  const { parkings } = useParkingStore();
+  const { userData } = useUserStore();
+
+  console.log(parkings);
+
+  const markersData = parkings.map((parking) => ({
+    parkingId: parking._id,
+    name: parking.name,
+    latitude: parking.location.coordinates[1],
+    longitude: parking.location.coordinates[0],
+    status: parking.status,
+    description: parking.description,
+  }));
 
   return (
     <MapContainer
@@ -144,7 +126,7 @@ const Map = (props) => {
         />
       )}
       <ResetCenterView selectPosition={selectPosition} />
-      <AddNewMarker />
+      {userData.type === "OPERATOR" && <AddNewMarker />}
       <RoutingComponent from={startPosition} to={endPosition} />
     </MapContainer>
   );
