@@ -6,7 +6,6 @@ import { useUserStore } from "../../store/user.store";
 
 const MarkerPopUp = () => {
   const { userData } = useUserStore();
-  console.log("userData :", userData);
 
   const {
     clearContent,
