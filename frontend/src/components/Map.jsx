@@ -83,11 +83,7 @@ const Map = (props) => {
   const { startPosition, endPosition } = useMarkerStore();
   const { setMarkerContent, toggleContent } = useMarkerPopUpStore();
 
-  // const [showContent, setShowContent] = useState(false);
-
-  // const handleMarkerClick = (latitude, longitude) => {
-  //   setShowContent(true);
-  // };
+  
 
   return (
     <MapContainer
