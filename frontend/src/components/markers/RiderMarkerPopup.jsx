@@ -43,7 +43,7 @@ const RiderMarkerPopup = ({ setShowContent }) => {
         <span className="font-medium">Rs. 40</span>
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex gap-2 mt-4">
         {additionalFeatures.map((feat) => (
           <div
             className="font-semibold text-xs border-2 border-primary rounded-2xl px-3 py-1 text-primary bg-[#8001ff33]"

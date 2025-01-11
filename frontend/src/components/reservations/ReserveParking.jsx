@@ -58,6 +58,8 @@ const ReserveParking = ({ setConfirmPage }) => {
         numberPlate,
         vehicleType,
       });
+
+      setConfirmPage(true);
     }
   };
 

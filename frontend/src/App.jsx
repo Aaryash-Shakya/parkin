@@ -7,11 +7,11 @@ function App() {
   const { loading } = useLoadingStore();
 
   return (
-    <>
+    <main className="bg-gray-200">
       {loading && <LoadingIndicator />}
       <ToastContainer />
       <MyRoutes />
-    </>
+    </main>
   );
 }
 
