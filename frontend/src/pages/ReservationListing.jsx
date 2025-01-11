@@ -17,22 +17,13 @@ const ReservationListing = () => {
       vehicleType: "2 Wheeler",
     },
     {
-      displayName: "Kathmandu Medical College and research center",
+      displayName: "Sitapaila Recreational Center",
       lat: 27.708317,
       lon: 85.3205817,
       price: 400,
       fromDateTime: "2025-01-10T04:27:55.110Z",
       toDateTime: "2025-01-10T06:27:55.110Z",
-      vehicleType: "2 Wheeler",
-    },
-    {
-      displayName: "Kathmandu Medical College and research center",
-      lat: 27.708317,
-      lon: 85.3205817,
-      price: 400,
-      fromDateTime: "2025-01-10T04:27:55.110Z",
-      toDateTime: "2025-01-10T06:27:55.110Z",
-      vehicleType: "2 Wheeler",
+      vehicleType: "4 Wheeler",
     },
   ];
 
@@ -69,7 +60,7 @@ const ReservationListing = () => {
                   <div className="text-primary flex gap-2 items-center font-sm font-medium">
                     2hrs <span className="text-gray-300">|</span>
                     <div className="font-semibold text-sm text-green-600">
-                      Expired
+                      Upcoming
                     </div>
                   </div>
                 </div>
