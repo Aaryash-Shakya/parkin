@@ -14,6 +14,7 @@ import ParkingSpaceDetails from "./pages/ParkingSpaceDetails";
 import ParkingStatusList from "./pages/ParkingStatusList";
 import OwnerParkingStatus from "./pages/OwnerParkingStatus";
 import MarkerPopUp from "./components/markers/MarkerPopUp";
+import { ComputerVision } from "./components/ComputerVision";
 
 const MyRoutes = () => {
   return (
@@ -44,6 +45,10 @@ const MyRoutes = () => {
           <Route
             path="/owner/parking-status/:id"
             element={<OwnerParkingStatus />}
+          />
+          <Route
+            path="/computer-vision"
+            element={<ComputerVision />}
           />
         </Routes>
         <MarkerPopUp />

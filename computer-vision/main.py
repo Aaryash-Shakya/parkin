@@ -36,6 +36,7 @@ async def upload_file(file: UploadFile = File(...)):
         with open(file_path, "wb") as f:
             f.write(await file.read())
             
+        # return JSONResponse(content={"url": f"http://localhost:8000/{file_path}"}, status_code=200)
             
         # do processing
         img = cv2.imread(file_path)
@@ -68,7 +69,9 @@ async def upload_file(file: UploadFile = File(...)):
         font = cv2.FONT_HERSHEY_SIMPLEX
         res = cv2.putText(img, text=text, org=(approx[0][0][0], approx[1][0][1]+60), fontFace=font, fontScale=1, color=(0,255,0), thickness=2, lineType=cv2.LINE_AA)
         res = cv2.rectangle(img, tuple(approx[0][0]), tuple(approx[2][0]), (0,255,0),3)  
-        processed_file_path = UPLOAD_DIR / f"{timestamp}_{file.filename.split('.')[0]}_processed.jpg"
+        
+        # processed_file_path = UPLOAD_DIR / f"{timestamp}_{file.filename.split('.')[0]}_processed.jpg"
+        processed_file_path = UPLOAD_DIR / file.filename
         cv2.imwrite(str(processed_file_path), res)
             
         return JSONResponse(content={"message": f"File '{file.filename}' uploaded successfully", "url": f"http://localhost:8000/{processed_file_path}"}, status_code=200)
