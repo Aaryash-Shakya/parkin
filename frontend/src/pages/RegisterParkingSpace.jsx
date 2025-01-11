@@ -3,9 +3,19 @@ import AdditionalFeatures from "../components/form/AdditionalFeatures";
 import Button from "../components/form/Button";
 import FormInput from "../components/form/FormInput";
 import PageHeader from "../components/PageHeader";
+import { createBooking } from "../api/owner.booking";
+import { useUserStore } from "../store/user.store";
+import { useMarkerStore } from "../store/useMarker.store";
+import { useLoadingStore } from "../store/loading.store";
+import { useNavigate } from "react-router-dom";
 
 const RegisterParkingSpace = () => {
   const additionalFeatures = ["CCTV", "EV Charging", "Sheltered", "Free"];
+  const { userData } = useUserStore();
+  const { newMarker } = useMarkerStore();
+  const { setLoading } = useLoadingStore();
+
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     displayName: "",
@@ -33,10 +43,40 @@ const RegisterParkingSpace = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Form Data:", formData);
-    // Submit the form data to the backend or perform other actions
+
+    const payload = {
+      userId: userData.userId,
+      name: formData.displayName,
+      lat: newMarker.lat,
+      long: newMarker.lng,
+      capacity: formData.capacity,
+      features: formData.additionalFeatures,
+      hourlyRates: {
+        TWO_WHEELER: {
+          ratePerHour: formData.twoWheelerHourlyRate,
+          freeMinutes: 0,
+        },
+        FOUR_WHEELER: {
+          ratePerHour: formData.fourWheelerHourlyRate,
+          freeMinutes: 0,
+        },
+      },
+      reservedSlots: formData.reservedCount,
+    };
+
+    setLoading(true);
+    try {
+      await createBooking(payload);
+
+      navigate("/owner/parking-spaces");
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

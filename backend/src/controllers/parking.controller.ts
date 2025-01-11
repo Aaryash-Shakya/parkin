@@ -9,6 +9,7 @@ async function addParking(req: any, res: any, next: any) {
 		lat,
 		long,
 		capacity,
+		reservedSlots,
 		maxHeightInMeter,
 		features,
 		hourlyRates,
@@ -33,6 +34,7 @@ async function addParking(req: any, res: any, next: any) {
 				coordinates: [parseFloat(long), parseFloat(lat)],
 			};
 		if (capacity) parkingObj.capacity = parseInt(capacity);
+		if (reservedSlots) parkingObj.reservedSlots = parseInt(reservedSlots);
 		if (maxHeightInMeter)
 			parkingObj.maxHeightInMeter = parseFloat(maxHeightInMeter);
 		if (features) parkingObj.features = features;
@@ -54,6 +56,7 @@ async function updateParking(req: any, res: any, next: any) {
 		lat,
 		long,
 		capacity,
+		reservedSlots,
 		maxHeightInMeter,
 		features,
 		hourlyRates,
@@ -79,6 +82,7 @@ async function updateParking(req: any, res: any, next: any) {
 				coordinates: [parseFloat(long), parseFloat(lat)],
 			};
 		if (capacity) parkingObj.capacity = parseInt(capacity);
+		if (reservedSlots) parkingObj.reservedSlots = parseInt(reservedSlots);
 		if (maxHeightInMeter)
 			parkingObj.maxHeightInMeter = parseFloat(maxHeightInMeter);
 		if (features) parkingObj.features = features;

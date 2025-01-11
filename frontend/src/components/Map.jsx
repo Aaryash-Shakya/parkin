@@ -69,6 +69,7 @@ const markersData = [
   {
     name: "Shandar Momo Parking ",
     latitude: 27.688329356193076,
+    // eslint-disable-next-line no-loss-of-precision
     longitude: 85.30236389186563,
     status: "Full",
     description: "Marker 3",
@@ -82,11 +83,7 @@ const Map = (props) => {
   const { startPosition, endPosition } = useMarkerStore();
   const { setMarkerContent, toggleContent } = useMarkerPopUpStore();
 
-  // const [showContent, setShowContent] = useState(false);
-
-  // const handleMarkerClick = (latitude, longitude) => {
-  //   setShowContent(true);
-  // };
+  
 
   return (
     <MapContainer
