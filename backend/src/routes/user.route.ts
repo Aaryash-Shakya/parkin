@@ -20,8 +20,8 @@ router
 	.route("/parked-vehicles")
 	.get(parkingSessionController.findParkedVehiclesOfUser);
 
-router.route("booking").post(bookingController.createBooking);
+router.route("/booking").post(bookingController.createBooking);
 
-router.route("bookings/:userId").get(bookingController.listBookings);
+router.route("/bookings/:userId").get(bookingController.listBookings);
 
 export default router;
