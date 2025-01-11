@@ -14,40 +14,46 @@ import ParkingSpaceDetails from "./pages/ParkingSpaceDetails";
 import ParkingStatusList from "./pages/ParkingStatusList";
 import OwnerParkingStatus from "./pages/OwnerParkingStatus";
 import MarkerPopUp from "./components/markers/MarkerPopUp";
+import { ComputerVision } from "./components/ComputerVision";
 
 const MyRoutes = () => {
   const location = useLocation();
   const noNavbarRoutes = ["/sign-in", "/sign-up"];
   return (
     <>
-      <Routes>
-        <Route index element={<Home />} />
-        <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/sign-up" element={<SignUp />} />
-        <Route path="/reserve-parking" element={<Reservation />} />
-        <Route path="/reservations" element={<ReservationListing />} />
-        <Route path="/parking" element={<ParkingStatus />} />
-        <Route path="/reservations/:id" element={<ReservationDetails />} />
-        <Route path="/setting" element={<Setting />} />
-        <Route
-          path="/owner/register-space"
-          element={<RegisterParkingSpace />}
-        />
-        <Route path="/owner/parking-spaces" element={<ParkingSpaceList />} />
-        <Route
-          path="/owner/parking-spaces/:id"
-          element={<ParkingSpaceDetails />}
-        />
-        <Route
-          path="/owner/parking-status-listing/"
-          element={<ParkingStatusList />}
-        />
-        <Route
-          path="/owner/parking-status/:id"
-          element={<OwnerParkingStatus />}
-        />
-      </Routes>
-      <MarkerPopUp />
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/reserve-parking" element={<Reservation />} />
+          <Route path="/reservations" element={<ReservationListing />} />
+          <Route path="/parking" element={<ParkingStatus />} />
+          <Route path="/reservations/:id" element={<ReservationDetails />} />
+          <Route path="/setting" element={<Setting />} />
+          <Route
+            path="/owner/register-space"
+            element={<RegisterParkingSpace />}
+          />
+          <Route path="/owner/parking-spaces" element={<ParkingSpaceList />} />
+          <Route
+            path="/owner/parking-spaces/:id"
+            element={<ParkingSpaceDetails />}
+          />
+          <Route
+            path="/owner/parking-status-listing/"
+            element={<ParkingStatusList />}
+          />
+          <Route
+            path="/owner/parking-status/:id"
+            element={<OwnerParkingStatus />}
+          />
+          <Route
+            path="/computer-vision"
+            element={<ComputerVision />}
+          />
+        </Routes>
+        <MarkerPopUp />
 
       {!noNavbarRoutes.includes(location.pathname) && <BottomNavbar />}
     </>

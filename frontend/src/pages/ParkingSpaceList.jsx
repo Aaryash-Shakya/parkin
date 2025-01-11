@@ -9,13 +9,12 @@ const ParkingSpaceList = () => {
   const navigate = useNavigate();
   // const { setLoading } = useLoadingStore();
   const { userData } = useUserStore();
+  console.log(userData.userId);
 
   const [reservations, setReservations] = useState([]);
 
   const fetchReservationData = async () => {
     try {
-      // setLoading(true);
-
       const result = await getOwnerParkingSpaces(userData.userId);
       console.log("result :", result);
       setReservations(result);
