@@ -16,6 +16,8 @@ router.route("/entry").post(parkingSessionController.recordEntry);
 
 router.route("/exit").put(parkingSessionController.recordExit);
 
+router.route("/show/:parkingId").get(parkingController.findParkingById);
+
 router
 	.route("/parked-vehicles/:parkingId")
 	.get(parkingSessionController.listParkedVehicles);
