@@ -6,7 +6,7 @@ import MarkerComponent from "./MarkerComponent";
 import { useMarkerPopUpStore } from "../../store/useMarkerPopUp.store";
 
 const newIcon = L.icon({
-  iconUrl: "/vite.svg",
+  iconUrl: "/marker.svg",
   iconSize: [28, 28],
 });
 

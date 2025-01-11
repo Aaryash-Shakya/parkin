@@ -18,8 +18,8 @@ export const searchNearByParking = async (location) => {
             {
                 params: {
                     lat: location.lat,
-                    long: location.lng,
-                    radiusKm: 0.5
+                    long: location.lon,
+                    radiusInKm: 0.5
                 }
             }
         );
