@@ -14,7 +14,7 @@ const MarkerComponent = (props) => {
         },
       }}
     >
-      <Popup>
+      {/* <Popup>
         {status === "available" ? (
           <button className="flex flex-col" type="submit">
             <div className="flex gap-2 items-center">
@@ -32,7 +32,7 @@ const MarkerComponent = (props) => {
             </div>
           </button>
         )}
-      </Popup>
+      </Popup> */}
     </Marker>
   );
 };

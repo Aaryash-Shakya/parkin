@@ -14,6 +14,9 @@ const CustomIcon = L.icon({
 const RoutingComponent = ({ from, to }) => {
   const map = useMap();
 
+  const fromArray = [from.lat, from.lon];
+  const toArray = [to.lat, to.lon];
+
   useEffect(() => {
     const routingControl = L.Routing.control({
       waypoints: [L.latLng(from), L.latLng(to)],
@@ -31,7 +34,7 @@ const RoutingComponent = ({ from, to }) => {
 
     // Cleanup on component unmount
     return () => map.removeControl(routingControl);
-  }, [from, to, map]);
+  }, [fromArray, toArray, map]);
 
   return null;
 };

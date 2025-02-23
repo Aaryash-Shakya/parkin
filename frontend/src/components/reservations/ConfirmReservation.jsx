@@ -1,10 +1,12 @@
+import { useNavigate } from "react-router-dom";
 import { formatISODate } from "../../helpers";
 import Button from "../form/Button";
 import PageHeader from "../PageHeader";
 
 const ConfirmReservation = ({ setConfirmPage }) => {
+  const navigate = useNavigate();
   const reservation = {
-    displayName: "Kathmandu Medical College and research center",
+    displayName: "Sagarmatha Parking",
     lat: 27.708317,
     lon: 85.3205817,
     price: 400,
@@ -62,6 +64,7 @@ const ConfirmReservation = ({ setConfirmPage }) => {
         </div>
         <Button
           title="Confirm"
+          onClick={()=>navigate('/reservations')}
           styles="bg-primary text-white hover:bg-blue-700 transition-all duration-0 hover:duration-150 ease-in-out"
         />
       </div>

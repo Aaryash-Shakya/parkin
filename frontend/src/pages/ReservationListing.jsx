@@ -8,7 +8,7 @@ const ReservationListing = () => {
 
   const reservations = [
     {
-      displayName: "Kathmandu Medical College and research center",
+      displayName: "Sagarmatha Parking",
       lat: 27.708317,
       lon: 85.3205817,
       price: 400,
@@ -42,7 +42,7 @@ const ReservationListing = () => {
           {reservations.map((reservation, index) => (
             <div
               key={index}
-              className="relative flex bg-white p-4 rounded-lg date-badge-parent justify-between items-center mb-4 gap-4 cursor-pointer "
+              className="relative flex bg-white p-4 rounded-lg date-badge-parent items-center mb-4 gap-4 cursor-pointer "
               onClick={() => navigate(`/reservations/${2}`)}
             >
               <div className="date-badge">

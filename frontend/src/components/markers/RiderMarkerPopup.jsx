@@ -22,9 +22,7 @@ const RiderMarkerPopup = ({ setShowContent }) => {
 
   const { markerContent } = useMarkerPopUpStore();
 
-  const { setEndPosition } = useMarkerPopUpStore();
-
-  const { toggleSearch } = useMarkerStore();
+  const { toggleSearch , setEndPosition} = useMarkerStore();
 
   const [additionalFeatures, setAdditionalFeatures] = useState([]);
   const [markerData, setMarkerData] = useState();
@@ -63,13 +61,13 @@ const RiderMarkerPopup = ({ setShowContent }) => {
       <div className="flex justify-between mb-2">
         <span className="text-gray-600">Latitude</span>
         <span className="font-medium">
-          {markerData?.location?.coordinates[0]}
+          {markerData?.location?.coordinates[1]}
         </span>
       </div>
       <div className="flex justify-between mb-2">
         <span className="text-gray-600">Longitude</span>
         <span className="font-medium">
-          {markerData?.location?.coordinates[1]}
+          {markerData?.location?.coordinates[0]}
         </span>
       </div>
       <div className="flex justify-between mb-2">
@@ -101,18 +99,20 @@ const RiderMarkerPopup = ({ setShowContent }) => {
           title="Directions"
           onClick={() => {
             // console.log("I am here")
-            toggleSearch();
             setEndPosition({
-              lat: markerData?.location?.coordinates[0],
-              long: markerData?.location?.coordinates[1],
+              lat: markerData?.location?.coordinates[1],
+              long: markerData?.location?.coordinates[0],
             });
+            // setTimeout(() => {
+            //   toggleSearch();
+            // }, 1000);
           }}
-          styles="text-md px-2 bg-primary text-white transition-all duration-0 hover:duration-150 ease-in-out"
+          styles="text-sm px-2 bg-primary text-white transition-all duration-0 hover:duration-150 ease-in-out"
         />
         <Button
           title="Reserve Space"
           onClick={handleReservationNavigation}
-          styles="text-md px-2 bg-secondary text-black transition-all duration-0 hover:duration-150 ease-in-out"
+          styles="text-sm px-2 bg-secondary text-black transition-all duration-0 hover:duration-150 ease-in-out"
         />
       </div>
     </div>

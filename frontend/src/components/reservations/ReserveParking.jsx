@@ -57,6 +57,12 @@ const ReserveParking = ({ setConfirmPage }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setConfirmPage(true);
+    return
+
+
+
     if (validateDates()) {
       // Proceed with form submission
       setLoading(true);
@@ -89,7 +95,6 @@ const ReserveParking = ({ setConfirmPage }) => {
         vehicleType,
       });
 
-      setConfirmPage(true);
     }
   };
 
@@ -107,7 +112,7 @@ const ReserveParking = ({ setConfirmPage }) => {
                 type="text"
                 name="display_name"
                 label="Location"
-                value={reservation.display_name}
+                value={'Sagarmatha Parking '}
                 onChange={() => {}} // disable display name change
               />
 

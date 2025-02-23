@@ -10,6 +10,9 @@ export const ComputerVision = () => {
     // Handle file selection
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
+        setTimeout(() => {
+            setShow(true);
+        }, 4000)
     };
 
     // Handle form submission
